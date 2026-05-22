@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: 'Fira Code', 'Share Tech Mono', 'Courier New', monospace;
+  --color-neon: #00FF00;
+  --color-neon-dim: #00cc00;
+  --color-neon-dark: #003300;
+  --color-bg: #050a05;
+  --color-surface: #0a0f0a;
+  --color-surface2: #0f1a0f;
+  --color-border: #1a2e1a;
+  --color-text: #c8d8c8;
+  --color-muted: #5a7a5a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #050a05;
+  color: #c8d8c8;
+  font-family: 'Fira Code', 'Share Tech Mono', 'Courier New', monospace;
+  overflow-x: hidden;
+}
+
+/* Grid background pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Neon glow effects */
+.neon-text {
+  color: #00FF00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.4), 0 0 40px rgba(0, 255, 0, 0.2);
+}
+
+.neon-border {
+  border-color: #00FF00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.05);
+}
+
+.neon-btn {
+  background-color: #00FF00;
+  color: #050a05;
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4), 0 0 30px rgba(0, 255, 0, 0.2);
+}
+
+.neon-btn:hover {
+  background-color: #33FF33;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.7), 0 0 50px rgba(0, 255, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.neon-btn-outline {
+  background-color: transparent;
+  color: #00FF00;
+  border: 1px solid #00FF00;
+  font-family: 'Fira Code', monospace;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.neon-btn-outline:hover {
+  background-color: rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+/* Cursor blink */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+/* Scanlines effect */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Terminal window dots */
+.terminal-dots::before {
+  content: '● ● ●';
+  font-size: 10px;
+  color: rgba(0, 255, 0, 0.6);
+  letter-spacing: 4px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050a05;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00FF00;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #33FF33;
+}
+
+/* Input styling */
+.terminal-input {
+  background-color: #0a0f0a;
+  border: 1px solid #1a2e1a;
+  color: #00FF00;
+  font-family: 'Fira Code', monospace;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.terminal-input:focus {
+  border-color: #00FF00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+.terminal-input::placeholder {
+  color: #2a4a2a;
+}
+
+/* Card hover */
+.product-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 255, 0, 0.15);
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% { text-shadow: 2px 0 #00FF00, -2px 0 #ff0040; }
+  20% { text-shadow: -2px 0 #00FF00, 2px 0 #ff0040; }
+  40% { text-shadow: 2px 2px #00FF00, -2px -2px #ff0040; }
+  60% { text-shadow: -2px 2px #00FF00, 2px -2px #ff0040; }
+  80% { text-shadow: 2px -2px #00FF00, -2px 2px #ff0040; }
+  100% { text-shadow: -2px 0 #00FF00, 2px 0 #ff0040; }
+}
+
+.glitch:hover {
+  animation: glitch 0.3s infinite;
+}
+
+/* Progress steps */
+.step-active {
+  color: #00FF00;
+  border-bottom: 2px solid #00FF00;
+}
+
+.step-inactive {
+  color: #5a7a5a;
+}
