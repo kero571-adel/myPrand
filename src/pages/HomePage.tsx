@@ -126,13 +126,6 @@ export default function HomePage() {
               >
                 import &#123; drip &#125; from &quot;./collection&quot;
               </span>
-              <span
-                className="inline-block bg-[#00FF00] cursor-blink flex-shrink-0"
-                style={{
-                  width: "clamp(2px, 0.5vw, 3px)",
-                  height: "clamp(12px, 2vw, 16px)",
-                }}
-              />
             </div>
           </motion.div>
         </motion.div>

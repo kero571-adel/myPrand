@@ -4,6 +4,8 @@ import { Zap, Trash2, Lock, MapPin, Clock, Plus, Minus } from "lucide-react";
 import Footer from "../components/Footer";
 import { useCart } from "../lib/CartContext";
 import { addOrder, generateOrderId, type Order } from "../lib/orders";
+import { useNavigate } from "react-router-dom";
+import { nav } from "framer-motion/client";
 
 const GOVERNORATES: Record<
   string,
@@ -106,6 +108,7 @@ export default function CheckoutPage() {
       return EMPTY_FORM;
     }
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem(LS_KEY, JSON.stringify(form));
@@ -132,8 +135,8 @@ export default function CheckoutPage() {
     const order: Order = {
       orderId: generateOrderId(),
       placedAt: now,
-      status: 'ORDER_PLACED',
-      statusHistory: [{ status: 'ORDER_PLACED', timestamp: now }],
+      status: "ORDER_PLACED",
+      statusHistory: [{ status: "ORDER_PLACED", timestamp: now }],
       customer: {
         name: form.name,
         phone: form.phone,
@@ -215,12 +218,20 @@ export default function CheckoutPage() {
                 )}
               </div>
             </div>
-            <button
-              onClick={() => (window.location.href = "/")}
-              className="neon-btn px-6 sm:px-8 py-3 text-sm font-bold tracking-widest rounded-sm w-full sm:w-auto"
-            >
-              RETURN_HOME()
-            </button>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <button
+                onClick={() => navigate("/orders")}
+                className="neon-btn px-6 sm:px-8 py-3 text-sm font-bold tracking-widest rounded-sm w-full sm:w-auto"
+              >
+                Follow_Order()
+              </button>
+              <button
+                onClick={() => (window.location.href = "/")}
+                className="neon-btn px-6 sm:px-8 py-3 text-sm font-bold tracking-widest rounded-sm w-full sm:w-auto"
+              >
+                RETURN_HOME()
+              </button>
+            </div>
           </motion.div>
         </main>
         <Footer />
@@ -282,7 +293,9 @@ export default function CheckoutPage() {
                   fontSize: "clamp(7px, 2vw, 10px)",
                 }}
               >
-                {step > s.id && <span className="text-[#00FF00] mr-0.5 sm:mr-1">✓</span>}
+                {step > s.id && (
+                  <span className="text-[#00FF00] mr-0.5 sm:mr-1">✓</span>
+                )}
                 {s.label}
               </button>
             ))}
@@ -310,7 +323,7 @@ export default function CheckoutPage() {
                     <div className="text-4xl mb-3">∅</div>
                     <div className="text-sm">// Cart is empty</div>
                     <button
-                      onClick={() => (window.location.href = "/collections")}
+                      onClick={() => navigate("/collections")}
                       className="mt-4 neon-btn px-6 py-2 text-xs"
                     >
                       BROWSE_COLLECTIONS()
@@ -361,7 +374,11 @@ export default function CheckoutPage() {
                         <div className="flex items-center border border-[#1a2e1a] flex-shrink-0">
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, item.size, item.quantity - 1)
+                              updateQuantity(
+                                item.id,
+                                item.size,
+                                item.quantity - 1
+                              )
                             }
                             className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#5a7a5a] hover:text-[#00FF00] hover:bg-[#0a1a0a] active:bg-[#0a1a0a] transition-all border-r border-[#1a2e1a]"
                           >
@@ -375,7 +392,11 @@ export default function CheckoutPage() {
                           </span>
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, item.size, item.quantity + 1)
+                              updateQuantity(
+                                item.id,
+                                item.size,
+                                item.quantity + 1
+                              )
                             }
                             disabled={item.quantity >= 10}
                             className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#5a7a5a] hover:text-[#00FF00] hover:bg-[#0a1a0a] active:bg-[#0a1a0a] transition-all border-l border-[#1a2e1a] disabled:opacity-30"
@@ -398,7 +419,9 @@ export default function CheckoutPage() {
                       style={{ fontFamily: "'Fira Code', monospace" }}
                     >
                       <span className="text-[#5a7a5a] text-xs">SUBTOTAL</span>
-                      <span className="text-white font-bold">{subtotal} EGB</span>
+                      <span className="text-white font-bold">
+                        {subtotal} EGB
+                      </span>
                     </div>
                     <div
                       className="text-[10px] text-[#3a5a3a]"
@@ -447,7 +470,8 @@ export default function CheckoutPage() {
                     className="text-[#5a7a5a] text-xs mb-2"
                     style={{ fontFamily: "'Fira Code', monospace" }}
                   >
-                    &gt; ENTER DELIVERY COORDINATES — Fields marked * are required.
+                    &gt; ENTER DELIVERY COORDINATES — Fields marked * are
+                    required.
                   </div>
 
                   <TInput
@@ -486,7 +510,11 @@ export default function CheckoutPage() {
                           -- Select governorate --
                         </option>
                         {Object.entries(GOVERNORATES).map(([key, g]) => (
-                          <option key={key} value={key} className="bg-[#080d08]">
+                          <option
+                            key={key}
+                            value={key}
+                            className="bg-[#080d08]"
+                          >
                             {g.label}
                           </option>
                         ))}
@@ -568,7 +596,9 @@ export default function CheckoutPage() {
                       <span className="truncate mr-2">
                         {item.name} ×{item.quantity}
                       </span>
-                      <span className="flex-shrink-0">{item.price * item.quantity}</span>
+                      <span className="flex-shrink-0">
+                        {item.price * item.quantity}
+                      </span>
                     </div>
                   ))}
                   <div className="border-t border-[#1a2e1a] pt-2 flex justify-between text-[#5a7a5a]">
@@ -587,7 +617,8 @@ export default function CheckoutPage() {
                   </div>
                   {govInfo && (
                     <div className="flex items-center gap-1 text-[10px] text-[#3a5a3a] pt-1">
-                      <Clock size={10} /> Delivery in {govInfo.days} business days
+                      <Clock size={10} /> Delivery in {govInfo.days} business
+                      days
                     </div>
                   )}
                 </div>
@@ -646,7 +677,9 @@ export default function CheckoutPage() {
                         <span className="truncate">
                           {item.name} — {item.size} ×{item.quantity}
                         </span>
-                        <span className="flex-shrink-0">{item.price * item.quantity}</span>
+                        <span className="flex-shrink-0">
+                          {item.price * item.quantity}
+                        </span>
                       </div>
                     ))}
                     <div className="border-t border-[#1a2e1a] pt-2 flex justify-between text-[#5a7a5a]">
@@ -664,12 +697,14 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-1 text-[10px] text-[#3a5a3a]">
-                      <Clock size={10} /> Delivery in {govInfo?.days} business days — Cash on Delivery
+                      <Clock size={10} /> Delivery in {govInfo?.days} business
+                      days — Cash on Delivery
                     </div>
                   </div>
 
                   <div className="text-[10px] text-[#3a5a3a] flex items-center gap-1">
-                    <Lock size={10} /> Payment on delivery — Cash on Delivery (COD)
+                    <Lock size={10} /> Payment on delivery — Cash on Delivery
+                    (COD)
                   </div>
 
                   <div className="flex flex-col sm:flex-row justify-between gap-3 pt-2">

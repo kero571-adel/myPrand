@@ -313,7 +313,6 @@ export default function TerminalPage() {
                 ref={inputRef}
                 type="text"
                 placeholder="Type a command..."
-                autoFocus
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKey}
@@ -321,7 +320,6 @@ export default function TerminalPage() {
                 autoComplete="off"
                 spellCheck={false}
               />
-
             </div>
           </div>
         </div>

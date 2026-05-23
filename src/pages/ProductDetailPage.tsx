@@ -367,7 +367,14 @@ export default function ProductDetailPage() {
                 <motion.button
                   whileTap={{ scale: 0.98 }}
                   onClick={handleBuyNow}
-                  className="w-full py-3.5 text-sm font-bold tracking-widest flex items-center justify-center gap-3 rounded-sm neon-btn-outline border border-[#00FF00]"
+                  disabled={totalUnits === 0}
+                  className={`w-full py-3.5 text-sm font-bold tracking-widest flex items-center justify-center gap-3 rounded-sm neon-btn-outline border border-[#00FF00] ${
+                    totalUnits === 0
+                      ? "opacity-30 cursor-not-allowed neon-btn"
+                      : justAdded
+                      ? "bg-[#00cc00] text-[#050a05]"
+                      : "neon-btn"
+                  }`}
                 >
                   <Zap size={16} />
                   executeOrder()
