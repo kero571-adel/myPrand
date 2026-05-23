@@ -1,19 +1,24 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Mail, Menu, X } from 'lucide-react';
-import { useCart } from '../lib/CartContext';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ShoppingCart, Menu, X } from "lucide-react";
+import { useCart } from "../lib/CartContext";
 
 const navLinks = [
-  { label: 'COLLECTIONS', path: '/collections' },
-  { label: 'DROP_01', path: '/collections', highlight: true },
-  { label: 'ARCHIVE', path: '/archive' },
-  { label: 'TERMINAL', path: '/terminal' },
+  { label: "COLLECTIONS", path: "/collections" },
+  { label: "ORDERS", path: "/orders" },
+  { label: "HOME", path: "/" },
+  { label: "TERMINAL", path: "/terminal" },
 ];
 
 export default function Navbar() {
   const location = useLocation();
   const { count } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#1a2e1a] bg-[#050a05]/90 backdrop-blur-sm">
@@ -28,7 +33,7 @@ export default function Navbar() {
             <span className="text-[#00FF00] text-xl">&gt;</span>
             <span
               className="text-[#00FF00] text-base sm:text-lg"
-              style={{ textShadow: '0 0 10px rgba(0,255,0,0.8)' }}
+              style={{ textShadow: "0 0 10px rgba(0,255,0,0.8)" }}
             >
               STYL_
             </span>
@@ -36,34 +41,24 @@ export default function Navbar() {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            {navLinks.map((link) => {
-                  const isTerminal = location.pathname === '/terminal' && link.label === 'TERMINAL';
-              const isCollections = location.pathname === '/collections' && link.label === 'COLLECTIONS';
-              const highlighted = link.highlight;
-              return (
-                <Link
-                  key={link.label}
-                  to={link.path}
-                  className={`text-xs tracking-widest transition-all duration-200 pb-0.5 ${
-                    highlighted
-                      ? 'text-[#00FF00] border-b border-[#00FF00]'
-                      : isTerminal || isCollections
-                      ? 'text-[#00FF00]'
-                      : 'text-[#8aaa8a] hover:text-[#00FF00]'
-                  }`}
-                  style={{ fontFamily: "'Fira Code', monospace" }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.path}
+                className={`text-xs tracking-widest transition-all duration-200 pb-0.5 ${
+                  isActive(link.path)
+                    ? "text-[#00FF00] border-b border-[#00FF00]"
+                    : "text-[#8aaa8a] hover:text-[#00FF00]"
+                }`}
+                style={{ fontFamily: "'Fira Code', monospace" }}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <button className="text-[#5a7a5a] hover:text-[#00FF00] transition-colors hidden sm:block">
-              <Mail size={18} />
-            </button>
             <Link
               to="/checkout"
               className="relative text-[#5a7a5a] hover:text-[#00FF00] transition-colors"
@@ -94,8 +89,10 @@ export default function Navbar() {
                 key={link.label}
                 to={link.path}
                 onClick={() => setMenuOpen(false)}
-                className={`text-xs tracking-widest py-2 border-b border-[#0f1a0f] ${
-                  link.highlight ? 'text-[#00FF00]' : 'text-[#8aaa8a] hover:text-[#00FF00]'
+                className={`text-xs tracking-widest py-2 border-b border-[#0f1a0f] transition-colors ${
+                  isActive(link.path)
+                    ? "text-[#00FF00]"
+                    : "text-[#8aaa8a] hover:text-[#00FF00]"
                 }`}
                 style={{ fontFamily: "'Fira Code', monospace" }}
               >

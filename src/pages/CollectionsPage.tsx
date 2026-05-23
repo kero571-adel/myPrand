@@ -155,7 +155,7 @@ export default function CollectionsPage() {
           </button>
         </div>
       </main>
-      <div className="pb-20 md:pb-0">
+      <div className="pb-25 md:pb-0 ">
         <Footer />
       </div>
     </div>

@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import Footer from '../components/Footer';
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -12,9 +12,9 @@ export default function HomePage() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url(/images/hero_bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
+          backgroundImage: "url(/images/hero_bg.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
         }}
       />
       {/* Dark overlay */}
@@ -24,8 +24,8 @@ export default function HomePage() {
         className="absolute inset-0 z-0"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(0,255,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,0,0.04) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
+            "linear-gradient(rgba(0,255,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,0,0.04) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
         }}
       />
       {/* Vertical rain lines */}
@@ -33,8 +33,8 @@ export default function HomePage() {
         className="absolute inset-0 z-0 opacity-10"
         style={{
           backgroundImage:
-            'repeating-linear-gradient(90deg, rgba(0,255,0,0.3) 0px, transparent 1px, transparent 38px, rgba(0,255,0,0.3) 39px)',
-          backgroundSize: '40px 100%',
+            "repeating-linear-gradient(90deg, rgba(0,255,0,0.3) 0px, transparent 1px, transparent 38px, rgba(0,255,0,0.3) 39px)",
+          backgroundSize: "40px 100%",
         }}
       />
 
@@ -44,12 +44,15 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl"
         >
           <div
             className="border border-[#1a3a1a] bg-[#050a05]/85 backdrop-blur-sm rounded-sm overflow-hidden"
-            style={{ boxShadow: '0 0 40px rgba(0,255,0,0.12), 0 0 80px rgba(0,255,0,0.06)' }}
+            style={{
+              boxShadow:
+                "0 0 40px rgba(0,255,0,0.12), 0 0 80px rgba(0,255,0,0.06)",
+            }}
           >
             {/* Top bar */}
             <div className="flex items-center gap-2 px-4 py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]/80">
@@ -67,18 +70,19 @@ export default function HomePage() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4"
                 style={{
                   fontFamily: "'Fira Code', monospace",
-                  textShadow: '0 0 30px rgba(0,255,0,0.2)',
+                  textShadow: "0 0 30px rgba(0,255,0,0.2)",
                 }}
               >
-                Welcome To The{' '}
+                Welcome To The{" "}
                 <span
                   className="text-[#00FF00]"
                   style={{
-                    textShadow: '0 0 20px rgba(0,255,0,0.8), 0 0 40px rgba(0,255,0,0.4)',
+                    textShadow:
+                      "0 0 20px rgba(0,255,0,0.8), 0 0 40px rgba(0,255,0,0.4)",
                   }}
                 >
                   Developer
-                </span>{' '}
+                </span>{" "}
                 Universe
               </motion.h1>
 
@@ -99,21 +103,36 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.5 }}
-            className="mt-6 mx-auto max-w-sm sm:max-w-md"
+            className="mt-6 mx-auto w-full max-w-sm sm:max-w-md px-4"
           >
             <div
-              className="flex items-center gap-2 border border-[#00FF00] bg-[#050a05]/90 backdrop-blur-sm px-4 py-3 rounded-sm cursor-pointer hover:bg-[#0a0f0a] transition-colors"
+              className="flex items-center gap-2 border border-[#00FF00] bg-[#050a05]/90 backdrop-blur-sm rounded-sm cursor-pointer hover:bg-[#0a0f0a] transition-colors"
               style={{
-                boxShadow: '0 0 15px rgba(0,255,0,0.25)',
+                padding: "clamp(10px, 2vw, 12px)",
+                boxShadow: "0 0 15px rgba(0,255,0,0.25)",
                 fontFamily: "'Fira Code', monospace",
               }}
-              onClick={() => navigate('/collections')}
+              onClick={() => navigate("/collections")}
             >
-              <span className="text-[#00FF00] text-sm font-bold">&gt;</span>
-              <span className="text-[#00FF00] text-xs sm:text-sm">
+              <span
+                className="text-[#00FF00] font-bold flex-shrink-0"
+                style={{ fontSize: "clamp(12px, 2vw, 16px)" }}
+              >
+                &gt;
+              </span>
+              <span
+                className="text-[#00FF00] flex-1 min-w-0"
+                style={{ fontSize: "clamp(10px, 1.5vw, 14px)" }}
+              >
                 import &#123; drip &#125; from &quot;./collection&quot;
               </span>
-              <span className="inline-block w-2.5 h-4 bg-[#00FF00] cursor-blink ml-1" />
+              <span
+                className="inline-block bg-[#00FF00] cursor-blink flex-shrink-0"
+                style={{
+                  width: "clamp(2px, 0.5vw, 3px)",
+                  height: "clamp(12px, 2vw, 16px)",
+                }}
+              />
             </div>
           </motion.div>
         </motion.div>
@@ -126,14 +145,14 @@ export default function HomePage() {
           className="mt-10 flex flex-col sm:flex-row items-center gap-4"
         >
           <button
-            onClick={() => navigate('/collections')}
+            onClick={() => navigate("/collections")}
             className="neon-btn px-8 py-3 rounded-sm text-sm font-bold tracking-widest flex items-center gap-2"
           >
             <ChevronRight size={16} />
             ENTER_COLLECTION()
           </button>
           <button
-            onClick={() => navigate('/terminal')}
+            onClick={() => navigate("/terminal")}
             className="neon-btn-outline px-8 py-3 rounded-sm text-sm font-bold tracking-widest border border-[#00FF00]"
           >
             OPEN_TERMINAL()
@@ -148,9 +167,9 @@ export default function HomePage() {
           className="mt-16 flex flex-wrap justify-center gap-8 sm:gap-16"
         >
           {[
-            { label: 'ASSETS_COMPILED', value: '12' },
-            { label: 'DROPS_DEPLOYED', value: '01' },
-            { label: 'DEVS_ONLINE', value: '4.2K' },
+            { label: "ASSETS_COMPILED", value: "12" },
+            { label: "DROPS_DEPLOYED", value: "01" },
+            { label: "DEVS_ONLINE", value: "4.2K" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -159,11 +178,13 @@ export default function HomePage() {
             >
               <div
                 className="text-2xl sm:text-3xl font-bold text-[#00FF00]"
-                style={{ textShadow: '0 0 15px rgba(0,255,0,0.6)' }}
+                style={{ textShadow: "0 0 15px rgba(0,255,0,0.6)" }}
               >
                 {stat.value}
               </div>
-              <div className="text-[#3a5a3a] text-[10px] tracking-widest mt-1">{stat.label}</div>
+              <div className="text-[#3a5a3a] text-[10px] tracking-widest mt-1">
+                {stat.label}
+              </div>
             </div>
           ))}
         </motion.div>

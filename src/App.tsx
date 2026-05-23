@@ -6,6 +6,7 @@ import CollectionsPage from './pages/CollectionsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CheckoutPage from './pages/CheckoutPage';
 import TerminalPage from './pages/TerminalPage';
+import OrdersPage from './pages/ordersPage';
 
 export default function App() {
   return (
@@ -21,8 +22,8 @@ export default function App() {
             <Route path="/collections" element={<CollectionsPage />} />
             <Route path="/collections/:id" element={<ProductDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
             <Route path="/terminal" element={<TerminalPage />} />
-            <Route path="/archive" element={<CollectionsPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </div>
