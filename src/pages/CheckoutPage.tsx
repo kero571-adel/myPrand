@@ -115,7 +115,7 @@ export default function CheckoutPage() {
     setForm((f) => ({ ...f, [field]: v }));
 
   const govInfo = GOVERNORATES[form.governorate];
-  const shipping = govInfo?.shipping ?? 0;
+  //const shipping = govInfo?.shipping ?? 0;
   const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
 
   const step2Valid =
@@ -348,10 +348,10 @@ export default function CheckoutPage() {
                             SIZE: {item.size}
                           </div>
                           <div className="text-[#00FF00] text-xs mt-1 font-bold">
-                            ${item.price * item.quantity}
+                            {item.price * item.quantity} EGB
                             {item.quantity > 1 && (
                               <span className="text-[#3a5a3a] font-normal ml-1 hidden sm:inline">
-                                (${item.price} × {item.quantity})
+                                ({item.price} × {item.quantity})
                               </span>
                             )}
                           </div>
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
                       style={{ fontFamily: "'Fira Code', monospace" }}
                     >
                       <span className="text-[#5a7a5a] text-xs">SUBTOTAL</span>
-                      <span className="text-white font-bold">${subtotal}</span>
+                      <span className="text-white font-bold">{subtotal} EGB</span>
                     </div>
                     <div
                       className="text-[10px] text-[#3a5a3a]"
@@ -568,12 +568,12 @@ export default function CheckoutPage() {
                       <span className="truncate mr-2">
                         {item.name} ×{item.quantity}
                       </span>
-                      <span className="flex-shrink-0">${item.price * item.quantity}</span>
+                      <span className="flex-shrink-0">{item.price * item.quantity}</span>
                     </div>
                   ))}
                   <div className="border-t border-[#1a2e1a] pt-2 flex justify-between text-[#5a7a5a]">
                     <span>SUBTOTAL</span>
-                    <span>${subtotal}</span>
+                    <span>{subtotal}</span>
                   </div>
                   <div className="flex justify-between text-[#5a7a5a]">
                     <span>SHIPPING</span>
@@ -582,7 +582,7 @@ export default function CheckoutPage() {
                   <div className="border-t border-[#1a2e1a] pt-2 flex justify-between font-bold">
                     <span className="text-white">TOTAL</span>
                     <span className="text-[#00FF00] text-right">
-                      ${subtotal} + {govInfo?.shipping ?? "?"} EGP
+                      {subtotal} + {govInfo?.shipping ?? "?"} EGP
                     </span>
                   </div>
                   {govInfo && (
@@ -646,12 +646,12 @@ export default function CheckoutPage() {
                         <span className="truncate">
                           {item.name} — {item.size} ×{item.quantity}
                         </span>
-                        <span className="flex-shrink-0">${item.price * item.quantity}</span>
+                        <span className="flex-shrink-0">{item.price * item.quantity}</span>
                       </div>
                     ))}
                     <div className="border-t border-[#1a2e1a] pt-2 flex justify-between text-[#5a7a5a]">
                       <span>Subtotal</span>
-                      <span>${subtotal}</span>
+                      <span>{subtotal}</span>
                     </div>
                     <div className="flex justify-between text-[#5a7a5a]">
                       <span>Shipping to {govInfo?.label}</span>

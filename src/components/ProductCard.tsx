@@ -98,7 +98,7 @@ export default function ProductCard({ product }: { product: Product }) {
               className="text-[#00FF00] font-bold ml-1"
               style={{ fontSize: "clamp(10px, 2vw, 14px)" }}
             >
-              ${product.price}
+               {product.price} EGB 
             </span>
           </div>
           <button

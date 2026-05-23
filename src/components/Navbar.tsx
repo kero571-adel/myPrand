@@ -4,9 +4,9 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "../lib/CartContext";
 
 const navLinks = [
+  { label: "HOME", path: "/" },
   { label: "COLLECTIONS", path: "/collections" },
   { label: "ORDERS", path: "/orders" },
-  { label: "HOME", path: "/" },
   { label: "TERMINAL", path: "/terminal" },
 ];
 

@@ -1,19 +1,30 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Zap, ArrowLeft, Plus, Minus, Trash2 } from "lucide-react";
+import {
+  ShoppingCart,
+  Zap,
+  ArrowLeft,
+  Plus,
+  Minus,
+  Trash2,
+} from "lucide-react";
 import CodeBlock from "../components/CodeBlock";
 import Footer from "../components/Footer";
 import { getProductById } from "../lib/products";
 import { useCart } from "../lib/CartContext";
 
+// local selection: { size -> quantity }
+type SizeSelection = Record<string, number>;
+
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addItem, removeItem, updateQuantity, items } = useCart();
+  const { addItem } = useCart();
   const product = getProductById(id ?? "");
 
   const [activeImage, setActiveImage] = useState(0);
+  const [selection, setSelection] = useState<SizeSelection>({});
   const [justAdded, setJustAdded] = useState(false);
 
   if (!product) {
@@ -24,7 +35,9 @@ export default function ProductDetailPage() {
       >
         <div className="text-center text-[#00FF00]">
           <div className="text-6xl mb-4">404</div>
-          <div className="text-sm text-[#5a7a5a]">// Asset not found in registry</div>
+          <div className="text-sm text-[#5a7a5a]">
+            // Asset not found in registry
+          </div>
           <button
             onClick={() => navigate("/collections")}
             className="mt-6 neon-btn-outline px-6 py-2 text-xs border border-[#00FF00]"
@@ -36,53 +49,69 @@ export default function ProductDetailPage() {
     );
   }
 
-  const specLines = Object.entries(product.specs).map(([key, value]) => ({ key, value }));
+  const specLines = Object.entries(product.specs).map(([key, value]) => ({
+    key,
+    value,
+  }));
 
-  // all cart entries for THIS product across all sizes
-  const cartEntriesForProduct = items.filter((i) => i.id === product.id);
+  const totalUnits = Object.values(selection).reduce((s, q) => s + q, 0);
+  const totalPrice = Object.entries(selection).reduce(
+    (s, [, q]) => s + product.price * q,
+    0
+  );
 
-  // helper: get qty in cart for a specific size
-  const qtyInCart = (size: string) =>
-    cartEntriesForProduct.find((i) => i.size === size)?.quantity ?? 0;
-
-  // total units + total price for this product across all sizes
-  const totalUnits = cartEntriesForProduct.reduce((s, i) => s + i.quantity, 0);
-  const totalPrice = cartEntriesForProduct.reduce((s, i) => s + i.price * i.quantity, 0);
-
-  // per-size controls
-  const handleIncrement = (size: string) => {
-    const current = qtyInCart(size);
-    if (current === 0) {
-      addItem(product, size, 1);
-    } else if (current < 10) {
-      updateQuantity(product.id, size, current + 1);
-    }
+  // ── Local size controls (no cart interaction) ────────────────
+  const increment = (size: string) => {
+    setSelection((prev) => {
+      const current = prev[size] ?? 0;
+      if (current >= 10) return prev;
+      return { ...prev, [size]: current + 1 };
+    });
   };
 
-  const handleDecrement = (size: string) => {
-    const current = qtyInCart(size);
-    if (current > 0) {
-      updateQuantity(product.id, size, current - 1); // removes at 0
-    }
+  const decrement = (size: string) => {
+    setSelection((prev) => {
+      const current = prev[size] ?? 0;
+      if (current <= 1) {
+        const next = { ...prev };
+        delete next[size];
+        return next;
+      }
+      return { ...prev, [size]: current - 1 };
+    });
   };
 
-  const handleBuyNow = () => {
-    // if nothing selected yet, add size M qty 1 as default
-    if (totalUnits === 0) addItem(product, "M", 1);
-    navigate("/checkout");
-  };
-
+  // ── Add all selected sizes to cart at once ───────────────────
   const handleAddToCart = () => {
     if (totalUnits === 0) return;
+    Object.entries(selection).forEach(([size, qty]) => {
+      addItem(product, size, qty);
+    });
     setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 2000);
+    setTimeout(() => {
+      setJustAdded(false);
+      setSelection({});
+    }, 2000);
+  };
+
+  // ── Buy now: add to cart then go to checkout ─────────────────
+  const handleBuyNow = () => {
+    if (totalUnits === 0) {
+      // nothing selected — add default size M × 1
+      addItem(product, "M", 1);
+    } else {
+      Object.entries(selection).forEach(([size, qty]) => {
+        addItem(product, size, qty);
+      });
+      setSelection({});
+    }
+    navigate("/checkout");
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
       <main className="flex-1 pt-14">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
           {/* Breadcrumb */}
           <button
             onClick={() => navigate("/collections")}
@@ -112,7 +141,9 @@ export default function ProductDetailPage() {
                       <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
                     </div>
-                    <span className="text-[#5a7a5a] text-[10px]">VIEW_PORT.exe</span>
+                    <span className="text-[#5a7a5a] text-[10px]">
+                      VIEW_PORT.exe
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[#3a5a3a] text-[10px]">
@@ -143,10 +174,9 @@ export default function ProductDetailPage() {
                       }}
                     />
                   </div>
-                  <div className="absolute bottom-2 left-2 text-[9px] text-[#00FF00] leading-tight">
-                    X: 38.6°<br />Y: 12.0°
+                  <div className="absolute bottom-2 right-2 text-[9px] text-[#00FF00]">
+                    ⊙
                   </div>
-                  <div className="absolute bottom-2 right-2 text-[9px] text-[#00FF00]">⊙</div>
                 </div>
 
                 <div className="flex gap-2 p-3 border-t border-[#1a2e1a] bg-[#0a0f0a]">
@@ -160,7 +190,11 @@ export default function ProductDetailPage() {
                           : "border-[#1a2e1a] opacity-50 hover:opacity-80"
                       }`}
                     >
-                      <img src={img} alt={`view ${i}`} className="w-full h-full object-cover grayscale" />
+                      <img
+                        src={img}
+                        alt={`view ${i}`}
+                        className="w-full h-full object-cover grayscale"
+                      />
                     </button>
                   ))}
                 </div>
@@ -215,20 +249,21 @@ export default function ProductDetailPage() {
                 lines={specLines}
               />
 
-              {/* ── Size selector — each size is independent ── */}
+              {/* ── Size selector (local state only — not cart) ── */}
               <div>
                 <div className="text-[#5a7a5a] text-xs mb-3 tracking-wider">
                   VAR SIZES[]
                   {totalUnits > 0 && (
                     <span className="text-[#3a5a3a] ml-3">
-                      // {totalUnits} unit{totalUnits !== 1 ? "s" : ""} selected — ${totalPrice}.00
+                      // {totalUnits} unit{totalUnits !== 1 ? "s" : ""} selected
+                      — ${totalPrice}.00
                     </span>
                   )}
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   {product.sizes.map((size) => {
-                    const qty = qtyInCart(size);
+                    const qty = selection[size] ?? 0;
                     const active = qty > 0;
 
                     return (
@@ -248,17 +283,21 @@ export default function ProductDetailPage() {
                               animate={{ width: 28, opacity: 1 }}
                               exit={{ width: 0, opacity: 0 }}
                               transition={{ duration: 0.15 }}
-                              onClick={() => handleDecrement(size)}
+                              onClick={() => decrement(size)}
                               className="h-10 flex items-center justify-center text-[#5a7a5a] hover:text-red-400 transition-colors border-r border-[#1a2e1a] overflow-hidden flex-shrink-0"
                             >
-                              {qty === 1 ? <Trash2 size={10} /> : <Minus size={10} />}
+                              {qty === 1 ? (
+                                <Trash2 size={10} />
+                              ) : (
+                                <Minus size={10} />
+                              )}
                             </motion.button>
                           )}
                         </AnimatePresence>
 
-                        {/* size label */}
+                        {/* size label — click to add 1 */}
                         <button
-                          onClick={() => handleIncrement(size)}
+                          onClick={() => increment(size)}
                           className={`w-10 h-10 text-xs font-bold transition-colors flex-shrink-0 ${
                             active
                               ? "text-[#00FF00]"
@@ -282,7 +321,7 @@ export default function ProductDetailPage() {
                                 {qty}
                               </span>
                               <button
-                                onClick={() => handleIncrement(size)}
+                                onClick={() => increment(size)}
                                 disabled={qty >= 10}
                                 className="w-7 h-10 flex items-center justify-center text-[#5a7a5a] hover:text-[#00FF00] hover:bg-[#0a2a0a] transition-colors border-l border-[#1a2e1a] disabled:opacity-30"
                               >
@@ -297,7 +336,7 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div className="mt-2 text-[10px] text-[#2a4a2a]">
-                  // tap a size to add it — use +/- to adjust quantity per size
+                  // select a size and quantity, then press addToCart
                 </div>
               </div>
 
@@ -317,10 +356,12 @@ export default function ProductDetailPage() {
                 >
                   <ShoppingCart size={18} />
                   {justAdded
-                    ? `${totalUnits} UNIT${totalUnits !== 1 ? "S" : ""} IN CART ✓`
+                    ? `${totalUnits} UNIT${totalUnits !== 1 ? "S" : ""} ADDED ✓`
                     : totalUnits === 0
                     ? `addToCart(${product.shortName})`
-                    : `addToCart(${product.shortName}) — ${totalUnits} unit${totalUnits !== 1 ? "s" : ""}`}
+                    : `addToCart(${product.shortName}) — ${totalUnits} unit${
+                        totalUnits !== 1 ? "s" : ""
+                      }`}
                 </motion.button>
 
                 <motion.button
@@ -341,7 +382,12 @@ export default function ProductDetailPage() {
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 text-[10px]">
-                {["CYBERPUNK", "STREETWEAR", "DEVELOPER", product.category.toUpperCase()].map((tag) => (
+                {[
+                  "CYBERPUNK",
+                  "STREETWEAR",
+                  "DEVELOPER",
+                  product.category.toUpperCase(),
+                ].map((tag) => (
                   <span
                     key={tag}
                     className="px-2 py-1 border border-[#1a2e1a] text-[#3a5a3a] hover:text-[#00FF00] hover:border-[#00FF00]/30 cursor-pointer transition-colors"
