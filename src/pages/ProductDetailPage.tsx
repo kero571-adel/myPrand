@@ -346,22 +346,32 @@ export default function ProductDetailPage() {
                   whileTap={{ scale: 0.98 }}
                   onClick={handleAddToCart}
                   disabled={totalUnits === 0}
-                  className={`w-full py-4 text-sm font-bold tracking-widest flex items-center justify-center gap-3 rounded-sm transition-all ${
+                  className={`w-full flex items-center justify-center gap-2 sm:gap-3 rounded-sm transition-all ${
                     totalUnits === 0
                       ? "opacity-30 cursor-not-allowed neon-btn"
                       : justAdded
                       ? "bg-[#00cc00] text-[#050a05]"
                       : "neon-btn"
                   }`}
+                  style={{
+                    padding: "clamp(12px, 2.5vw, 16px)",
+                    fontSize: "clamp(11px, 1.5vw, 14px)",
+                    fontWeight: "bold",
+                    letterSpacing: "0.1em",
+                  }}
                 >
-                  <ShoppingCart size={18} />
-                  {justAdded
-                    ? `${totalUnits} UNIT${totalUnits !== 1 ? "S" : ""} ADDED ✓`
-                    : totalUnits === 0
-                    ? `addToCart(${product.shortName})`
-                    : `addToCart(${product.shortName}) — ${totalUnits} unit${
-                        totalUnits !== 1 ? "s" : ""
-                      }`}
+                  <ShoppingCart size={16} />
+                  <span className="truncate">
+                    {justAdded
+                      ? `${totalUnits} UNIT${
+                          totalUnits !== 1 ? "S" : ""
+                        } ADDED ✓`
+                      : totalUnits === 0
+                      ? `addToCart(${product.shortName})`
+                      : `addToCart(${product.shortName}) — ${totalUnits} unit${
+                          totalUnits !== 1 ? "s" : ""
+                        }`}
+                  </span>
                 </motion.button>
 
                 <motion.button

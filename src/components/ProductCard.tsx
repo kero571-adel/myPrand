@@ -47,13 +47,16 @@ export default function ProductCard({ product }: { product: Product }) {
       style={{ fontFamily: "'Fira Code', monospace" }}
     >
       {/* Card Header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
-        <div className="flex gap-1.5">
+      <div className="flex items-center justify-between px-2 sm:px-3 py-1.5 sm:py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
+        <div className="flex gap-1">
           {dotColors.map((c, i) => (
-            <span key={i} className={`w-2 h-2 rounded-full ${c}`} />
+            <span
+              key={i}
+              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${c}`}
+            />
           ))}
         </div>
-        <span className="text-[10px] text-[#3a5a3a] tracking-wider">
+        <span className="text-[8px] sm:text-[10px] text-[#3a5a3a] tracking-wider truncate ml-2">
           {product.assetId}
         </span>
       </div>
@@ -98,14 +101,14 @@ export default function ProductCard({ product }: { product: Product }) {
               className="text-[#00FF00] font-bold ml-1"
               style={{ fontSize: "clamp(10px, 2vw, 14px)" }}
             >
-               {product.price} EGB 
+              {product.price} EGB
             </span>
           </div>
           <button
             onClick={() => navigate(`/collections/${product.slug}`)}
             className="neon-btn font-bold tracking-widest flex-shrink-0 whitespace-nowrap rounded-sm"
             style={{
-              fontSize: "clamp(7px, 1.2vw, 10px)",
+              fontSize: "clamp(9px, 1.8vw, 13px)",
               padding: "clamp(4px, 0.8vw, 6px) clamp(6px, 1.5vw, 12px)",
             }}
           >

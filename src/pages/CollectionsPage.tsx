@@ -1,25 +1,30 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { SlidersHorizontal } from 'lucide-react';
-import ProductCard from '../components/ProductCard';
-import SidebarFilters from '../components/SidebarFilters';
-import Footer from '../components/Footer';
-import { getProductsByCategory } from '../lib/products';
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { SlidersHorizontal } from "lucide-react";
+import ProductCard from "../components/ProductCard";
+import SidebarFilters from "../components/SidebarFilters";
+import Footer from "../components/Footer";
+import { getProductsByCategory } from "../lib/products";
+import { useNavigate } from "react-router-dom";
 
-const sortOptions = ['RELEVANCE', 'PRICE_ASC', 'PRICE_DESC', 'NEWEST'];
+const sortOptions = ["RELEVANCE", "PRICE_ASC", "PRICE_DESC", "NEWEST"];
 
 export default function CollectionsPage() {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('RELEVANCE');
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("RELEVANCE");
   const [sortOpen, setSortOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const filtered = useMemo(() => {
     let list = getProductsByCategory(activeFilter);
-    if (sortBy === 'PRICE_ASC') list = [...list].sort((a, b) => a.price - b.price);
-    if (sortBy === 'PRICE_DESC') list = [...list].sort((a, b) => b.price - a.price);
+    if (sortBy === "PRICE_ASC")
+      list = [...list].sort((a, b) => a.price - b.price);
+    if (sortBy === "PRICE_DESC")
+      list = [...list].sort((a, b) => b.price - a.price);
     return list;
   }, [activeFilter, sortBy]);
+
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
@@ -48,7 +53,7 @@ export default function CollectionsPage() {
               <div className="relative">
                 <button
                   onClick={() => setSortOpen(!sortOpen)}
-                  className="flex items-center gap-2 border border-[#1a2e1a] bg-[#080d08] px-3 py-1.5 text-[10px] text-[#5a7a5a] hover:text-[#00FF00] hover:border-[#00FF00]/40 transition-all"
+                  className="flex items-center gap-2 border border-[#1a2e1a] bg-[#080d08] px-3 py-1.5 text-[10px] text-[#c3c2c2] hover:text-[#00FF00] hover:border-[#00FF00]/40 transition-all"
                   style={{ fontFamily: "'Fira Code', monospace" }}
                 >
                   <SlidersHorizontal size={12} />
@@ -65,8 +70,8 @@ export default function CollectionsPage() {
                         }}
                         className={`w-full text-left px-3 py-2 text-[10px] border-b last:border-b-0 border-[#1a2e1a] transition-colors ${
                           sortBy === opt
-                            ? 'text-[#00FF00] bg-[#0a1a0a]'
-                            : 'text-[#5a7a5a] hover:text-[#00FF00] hover:bg-[#0a0f0a]'
+                            ? "text-[#00FF00] bg-[#0a1a0a]"
+                            : "text-[#5a7a5a] hover:text-[#00FF00] hover:bg-[#0a0f0a]"
                         }`}
                         style={{ fontFamily: "'Fira Code', monospace" }}
                       >
@@ -84,11 +89,11 @@ export default function CollectionsPage() {
         <div className="md:hidden px-4 py-3 border-b border-[#1a2e1a]">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="flex items-center gap-2 text-[#5a7a5a] hover:text-[#00FF00] text-xs transition-colors"
+            className="flex items-center gap-2 text-[#c3c2c2] hover:text-[#00FF00] text-xs transition-colors"
             style={{ fontFamily: "'Fira Code', monospace" }}
           >
             <SlidersHorizontal size={14} />
-            {sidebarOpen ? 'CLOSE_FILTERS()' : 'OPEN_FILTERS()'}
+            {sidebarOpen ? "CLOSE_FILTERS()" : "OPEN_FILTERS()"}
           </button>
         </div>
 
@@ -96,7 +101,7 @@ export default function CollectionsPage() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex gap-6">
             {/* Sidebar */}
-            <div className={`${sidebarOpen ? 'block' : 'hidden'} md:block`}>
+            <div className={`${sidebarOpen ? "block" : "hidden"} md:block`}>
               <SidebarFilters
                 active={activeFilter}
                 onChange={(cat) => {
@@ -115,11 +120,18 @@ export default function CollectionsPage() {
                   style={{ fontFamily: "'Fira Code', monospace" }}
                 >
                   <div className="text-4xl mb-4">∅</div>
-                  <div className="text-sm">// No assets found in this directory</div>
-                  <div className="text-xs mt-2 text-[#2a3a2a]">ERROR: EMPTY_RESULT_SET</div>
+                  <div className="text-sm">
+                    // No assets found in this directory
+                  </div>
+                  <div className="text-xs mt-2 text-[#2a3a2a]">
+                    ERROR: EMPTY_RESULT_SET
+                  </div>
                 </div>
               ) : (
-                <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <motion.div
+                  layout
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
                   {filtered.map((product, i) => (
                     <motion.div
                       key={product.id}
@@ -148,7 +160,7 @@ export default function CollectionsPage() {
             </span>
           </div>
           <button
-            onClick={() => (window.location.href = '/checkout')}
+            onClick={() => navigate("/checkout")}
             className="w-full neon-btn py-3 rounded-sm text-xs font-bold tracking-widest"
           >
             EXEC_CHECKOUT()
