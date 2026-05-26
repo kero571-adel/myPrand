@@ -13,6 +13,7 @@ import CodeBlock from "../components/CodeBlock";
 import Footer from "../components/Footer";
 import { getProductById } from "../lib/products";
 import { useCart } from "../lib/CartContext";
+import { useAuth } from "../lib/AuthContext";
 
 // local selection: { size -> quantity }
 type SizeSelection = Record<string, number>;
@@ -22,7 +23,7 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const product = getProductById(id ?? "");
-
+  const { user } = useAuth();
   const [activeImage, setActiveImage] = useState(0);
   const [selection, setSelection] = useState<SizeSelection>({});
   const [justAdded, setJustAdded] = useState(false);
@@ -93,11 +94,13 @@ export default function ProductDetailPage() {
       setSelection({});
     }, 2000);
   };
-
   // ── Buy now: add to cart then go to checkout ─────────────────
   const handleBuyNow = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     if (totalUnits === 0) {
-      // nothing selected — add default size M × 1
       addItem(product, "M", 1);
     } else {
       Object.entries(selection).forEach(([size, qty]) => {
@@ -107,7 +110,6 @@ export default function ProductDetailPage() {
     }
     navigate("/checkout");
   };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
       <main className="flex-1 pt-14">

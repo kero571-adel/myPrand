@@ -3,18 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Package, ChevronDown, ChevronUp, ArrowLeft } from "lucide-react";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import {
-  getOrders,
+  subscribeToUserOrders,
   type Order,
   type OrderStatus,
   STATUS_META,
 } from "../lib/orders";
+import { useAuth } from "../lib/AuthContext";
 
-const TIMELINE_STEPS: OrderStatus[] = [
-  "ORDER_PLACED",
-  "SHIPPED",
-  "DELIVERED",
-];
+const TIMELINE_STEPS: OrderStatus[] = ["ORDER_PLACED", "SHIPPED", "DELIVERED"];
 
 function StatusBadge({ status }: { status: OrderStatus }) {
   const meta = STATUS_META[status];
@@ -103,7 +101,10 @@ function StatusTimeline({ order }: { order: Order }) {
                 {histEntry && (
                   <span
                     className="text-[7px] sm:text-[8px] text-[#3a5a3a] text-center"
-                    style={{ fontFamily: "'Fira Code', monospace", maxWidth: "3.5rem" }}
+                    style={{
+                      fontFamily: "'Fira Code', monospace",
+                      maxWidth: "3.5rem",
+                    }}
                   >
                     {formatDate(histEntry.timestamp)}
                   </span>
@@ -246,7 +247,9 @@ function OrderCard({ order }: { order: Order }) {
                   <span>{order.subtotal} EGP</span>
                 </div>
                 <div className="flex justify-between text-[#5a7a5a]">
-                  <span className="truncate mr-2">Shipping to {order.customer.govLabel}</span>
+                  <span className="truncate mr-2">
+                    Shipping to {order.customer.govLabel}
+                  </span>
                   <span className="flex-shrink-0">{order.shipping} EGP</span>
                 </div>
                 <div className="border-t border-[#1a2e1a] pt-1.5 flex justify-between font-bold text-sm">
@@ -261,13 +264,20 @@ function OrderCard({ order }: { order: Order }) {
                 {[
                   ["Name", order.customer.name],
                   ["Phone", order.customer.phone],
-                  ["Address", `${order.customer.city}, ${order.customer.address}`],
+                  [
+                    "Address",
+                    `${order.customer.city}, ${order.customer.address}`,
+                  ],
                   ["Governorate", order.customer.govLabel],
-                  ...(order.customer.email ? [["Email", order.customer.email]] : []),
+                  ...(order.customer.email
+                    ? [["Email", order.customer.email]]
+                    : []),
                   ["Est. Delivery", `${order.deliveryDays} business days`],
                 ].map(([k, v]) => (
                   <div key={k} className="flex gap-2 sm:gap-3">
-                    <span className="text-[#3a5a3a] w-20 sm:w-24 flex-shrink-0">{k}:</span>
+                    <span className="text-[#3a5a3a] w-20 sm:w-24 flex-shrink-0">
+                      {k}:
+                    </span>
                     <span className="text-[#00FF00] break-all">{v}</span>
                   </div>
                 ))}
@@ -298,7 +308,11 @@ function FilterTabs({
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const check = () => setShowFade(el.scrollWidth > el.clientWidth && el.scrollLeft < el.scrollWidth - el.clientWidth - 2);
+    const check = () =>
+      setShowFade(
+        el.scrollWidth > el.clientWidth &&
+          el.scrollLeft < el.scrollWidth - el.clientWidth - 2
+      );
     check();
     el.addEventListener("scroll", check);
     window.addEventListener("resize", check);
@@ -326,9 +340,10 @@ function FilterTabs({
               key={f.value}
               onClick={() => onSelect(f.value)}
               className={`flex-shrink-0 px-3 sm:px-5 py-2.5 text-[10px] tracking-wider border-r last:border-r-0 border-[#1a2e1a] transition-all
-                ${active
-                  ? "text-[#00FF00] bg-[#0a1a0a] border-b-2 border-b-[#00FF00]"
-                  : "text-[#3a5a3a] hover:text-[#5a7a5a]"
+                ${
+                  active
+                    ? "text-[#00FF00] bg-[#0a1a0a] border-b-2 border-b-[#00FF00]"
+                    : "text-[#3a5a3a] hover:text-[#5a7a5a]"
                 }`}
               style={{ fontFamily: "'Fira Code', monospace" }}
             >
@@ -336,7 +351,9 @@ function FilterTabs({
               {count > 0 && (
                 <span
                   className={`ml-1.5 px-1 text-[9px] rounded-sm ${
-                    active ? "bg-[#00FF00]/20 text-[#00FF00]" : "bg-[#1a2e1a] text-[#3a5a3a]"
+                    active
+                      ? "bg-[#00FF00]/20 text-[#00FF00]"
+                      : "bg-[#1a2e1a] text-[#3a5a3a]"
                   }`}
                 >
                   {count}
@@ -363,10 +380,8 @@ export default function OrdersPage() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [filter, setFilter] = useState<OrderStatus | "ALL">("ALL");
-
-  useEffect(() => {
-    setOrders(getOrders());
-  }, []);
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   const filtered =
     filter === "ALL" ? orders : orders.filter((o) => o.status === filter);
@@ -378,7 +393,25 @@ export default function OrdersPage() {
     { value: "DELIVERED", label: "DELIVERED" },
     { value: "CANCELLED", label: "CANCELLED" },
   ];
-
+  useEffect(() => {
+    // 🔐 حماية الصفحة: لو مش مسجل دخول → حول لـ login
+    if (user === undefined) return; // انتظر لحد ما الـ auth يخلص load
+    if (!user) {
+      navigate("/login", { replace: true, state: { from: "/orders" } });
+    }
+  }, [user, navigate]);
+  useEffect(() => {
+    if (!user) return;
+    setIsLoading(true);
+    const unsub = subscribeToUserOrders(user.uid, (orders) => {
+      setOrders(orders);
+      setIsLoading(false); // ✅ انتهى التحميل
+    });
+    return () => {
+      unsub();
+      setIsLoading(false);
+    };
+  }, [user]);
   return (
     <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
       <main className="flex-1 pt-14">
@@ -413,7 +446,8 @@ export default function OrdersPage() {
               className="text-[#5a7a5a]"
               style={{ fontSize: "clamp(9px, 1.5vw, 12px)" }}
             >
-              // {orders.length} order{orders.length !== 1 ? "s" : ""} found in registry
+              // {orders.length} order{orders.length !== 1 ? "s" : ""} found in
+              registry
             </p>
           </motion.div>
 
@@ -426,7 +460,10 @@ export default function OrdersPage() {
           />
 
           {/* Orders list */}
-          {filtered.length === 0 ? (
+          {/* 🔽 استبدل جزء عرض الـ Orders بهذا */}
+          {isLoading ? (
+            <Loader fullScreen={false} />
+          ) : filtered.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

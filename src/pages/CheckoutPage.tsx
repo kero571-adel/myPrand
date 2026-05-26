@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Zap, Trash2, Lock, MapPin, Clock, Plus, Minus } from "lucide-react";
 import Footer from "../components/Footer";
 import { useCart } from "../lib/CartContext";
-import { addOrder, generateOrderId, type Order } from "../lib/orders";
 import { useNavigate } from "react-router-dom";
-import { nav } from "framer-motion/client";
+import { useAuth } from "../lib/AuthContext";
+import { addOrder, generateOrderId, type Order } from "../lib/orders";
 
 const GOVERNORATES: Record<
   string,
@@ -109,7 +109,15 @@ export default function CheckoutPage() {
     }
   });
   const navigate = useNavigate();
-
+  const { user } = useAuth();
+  useEffect(() => {
+    if (user?.email) {
+      setForm((f) => ({ ...f, email: user.email! }));
+    }
+  }, [user?.email]);
+  useEffect(() => {
+    if (!user) navigate("/auth?redirect=checkout");
+  }, [user, navigate]);
   useEffect(() => {
     localStorage.setItem(LS_KEY, JSON.stringify(form));
   }, [form]);
@@ -128,19 +136,20 @@ export default function CheckoutPage() {
     form.city.trim() !== "" &&
     form.address.trim() !== "";
 
-  const handleSubmit = () => {
-    if (!step2Valid || !govInfo) return;
+  const handleSubmit = async () => {
+    if (!step2Valid || !govInfo || !user) return;
 
     const now = new Date().toISOString();
-    const order: Order = {
+    const order: Omit<Order, "firestoreId"> = {
       orderId: generateOrderId(),
+      userId: user.uid, // ← Firebase UID
       placedAt: now,
       status: "ORDER_PLACED",
       statusHistory: [{ status: "ORDER_PLACED", timestamp: now }],
       customer: {
         name: form.name,
         phone: form.phone,
-        email: form.email || undefined,
+        ...(form.email.trim() ? { email: form.email.trim() } : {}),
         governorate: form.governorate,
         govLabel: govInfo.label,
         city: form.city,
@@ -160,7 +169,7 @@ export default function CheckoutPage() {
       deliveryDays: govInfo.days,
     };
 
-    addOrder(order);
+    await addOrder(order);
     setSubmitted(true);
     clearCart();
   };
@@ -548,14 +557,6 @@ export default function CheckoutPage() {
                     required
                   />
 
-                  <TInput
-                    label="var.email"
-                    placeholder="user@domain.com (optional)"
-                    type="email"
-                    value={form.email}
-                    onChange={set("email")}
-                  />
-
                   <div className="flex flex-col sm:flex-row justify-between gap-3 pt-2">
                     <button
                       onClick={() => setStep(1)}
@@ -716,7 +717,9 @@ export default function CheckoutPage() {
                     </button>
                     <motion.button
                       whileTap={{ scale: 0.97 }}
-                      onClick={handleSubmit}
+                      onClick={async () => {
+                        await handleSubmit();
+                      }}
                       className="neon-btn px-8 py-3 text-sm font-bold tracking-widest rounded-sm flex items-center justify-center gap-2 order-1 sm:order-2"
                     >
                       <Zap size={16} /> CONFIRM_ORDER
