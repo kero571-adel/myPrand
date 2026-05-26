@@ -251,7 +251,7 @@ export default function Navbar() {
       <ConfirmDialog
         open={showLogoutConfirm}
         title="⚠️ CONFIRM_LOGOUT"
-        message="Are you sure you want to end your session?\n\n[CONFIRM] to logout\n[CANCEL] to stay logged in"
+        message="Are you sure you want to end your session?"
         onConfirm={handleLogout}
         onCancel={() => setShowLogoutConfirm(false)}
       />
