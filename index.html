@@ -48,7 +48,8 @@
       name="twitter:image"
       content="https://dctoh.vercel.app/images/og-cover.png"
     />
-
+    <link rel="preconnect" href="https://myprand-a10b1.firebaseapp.com" />
+    <link rel="preconnect" href="https://apis.google.com" />
     <meta
       name="google-site-verification"
       content="X9IzHqOQ4S-f7N9QRJGzWXIOZTXCg5-dgr9i_3JFjL0"
@@ -63,9 +64,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
   </head>
 
   <body>
