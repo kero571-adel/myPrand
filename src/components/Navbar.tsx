@@ -50,11 +50,11 @@ function ConfirmDialog({
             <LogOut size={16} className="text-[#ff5f57]" />
             <h3 className="text-[#00FF00] text-sm font-bold">{title}</h3>
           </div>
-          
+
           <p className="text-[#5a7a5a] text-xs whitespace-pre-line mb-6">
             {message}
           </p>
-          
+
           <div className="flex gap-3 justify-end">
             <button
               onClick={onCancel}
@@ -175,6 +175,7 @@ export default function Navbar() {
               {/* Cart */}
               <button
                 onClick={handleCartClick}
+                aria-label="Shopping cart"
                 className="relative text-[#5a7a5a] hover:text-[#00FF00] transition-colors"
               >
                 <ShoppingCart size={18} />
@@ -188,6 +189,8 @@ export default function Navbar() {
               {/* Mobile Hamburger */}
               <button
                 onClick={() => setMenuOpen((prev) => !prev)}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={menuOpen}
                 className="md:hidden text-[#5a7a5a] hover:text-[#00FF00] transition-colors"
               >
                 {menuOpen ? <X size={18} /> : <Menu size={18} />}
