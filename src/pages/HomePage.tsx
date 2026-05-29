@@ -210,7 +210,7 @@ export default function HomePage() {
                 >
                   {stat.value}
                 </div>
-                <div className="text-[#3a5a3a] text-[10px] tracking-widest mt-1">
+                <div className="text-[#6a9a6a] text-[10px] tracking-widest mt-1">
                   {stat.label}
                 </div>
               </div>
