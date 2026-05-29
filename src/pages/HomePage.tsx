@@ -80,6 +80,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}
             className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl"
           >
             <div
@@ -98,10 +99,7 @@ export default function HomePage() {
 
               {/* Hero Text */}
               <div className="px-6 sm:px-10 py-10 sm:py-14 text-center">
-                <motion.h1
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+                <h1
                   className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4"
                   style={{
                     fontFamily: "'Fira Code', monospace",
@@ -119,7 +117,7 @@ export default function HomePage() {
                     Developer
                   </span>{" "}
                   Universe
-                </motion.h1>
+                </h1>
 
                 <motion.p
                   initial={{ opacity: 0 }}
