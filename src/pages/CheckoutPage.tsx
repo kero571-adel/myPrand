@@ -356,6 +356,7 @@ export default function CheckoutPage() {
                         <img
                           src={item.image}
                           alt={item.name}
+                          loading="lazy"
                           className="w-12 h-14 sm:w-14 sm:h-16 object-cover grayscale border border-[#1a2e1a] flex-shrink-0"
                         />
 

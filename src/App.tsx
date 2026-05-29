@@ -9,6 +9,7 @@ import TerminalPage from "./pages/TerminalPage";
 import OrdersPage from "./pages/ordersPage";
 import { AuthProvider } from "./lib/AuthContext";
 import AuthPage from "./pages/AuthPage";
+import ContactPage from "./pages/Contact";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/terminal" element={<TerminalPage />} />
               <Route path="/login" element={<AuthPage />} />
+              <Route path="/contact" element={<ContactPage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </div>

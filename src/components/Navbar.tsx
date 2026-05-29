@@ -11,9 +11,9 @@ const navLinks = [
   { label: "COLLECTIONS", path: "/collections" },
   { label: "ORDERS", path: "/orders" },
   { label: "TERMINAL", path: "/terminal" },
+  { label: "CONTACT US", path: "/contact" },
 ];
 
-// 🔽 مكون Confirmation Dialog مخصص
 function ConfirmDialog({
   open,
   title,
@@ -131,7 +131,7 @@ export default function Navbar() {
                 className="text-[#00FF00] text-base sm:text-lg"
                 style={{ textShadow: "0 0 10px rgba(0,255,0,0.8)" }}
               >
-                STYL_
+                DCTOH
               </span>
             </Link>
 

@@ -224,6 +224,7 @@ function OrderCard({ order }: { order: Order }) {
                       <img
                         src={item.image}
                         alt={item.name}
+                        loading="lazy"
                         className="w-9 h-11 sm:w-10 sm:h-12 object-cover grayscale border border-[#1a2e1a] flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
