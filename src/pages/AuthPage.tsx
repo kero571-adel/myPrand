@@ -220,7 +220,7 @@ export default function AuthPage() {
             }
           }}
           disabled={loading}
-          className="w-full max-w-sm px-3 sm:px-4 font-bold tracking-widest border border-[#1a2e1a] text-[#5a7a5a] hover:border-[#00FF00] hover:text-[#00FF00] transition-all disabled:opacity-40"
+          className="w-full max-w-sm px-3 sm:px-4 font-bold tracking-widest border border-[#1a2e1a] text-white hover:border-[#00FF00] hover:text-[#00FF00] transition-all disabled:opacity-40"
           style={{
             padding: "clamp(10px, 2.5vw, 12px)",
             fontSize: "clamp(11px, 1.5vw, 14px)",

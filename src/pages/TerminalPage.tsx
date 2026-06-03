@@ -74,6 +74,15 @@ export default function TerminalPage() {
         setTimeout(() => navigate("/checkout"), 600);
         return;
       }
+      if (target === "contact") {
+        newLines.push({
+          type: "output-line",
+          text: "// Navigating to /contact...",
+        });
+        setLines((l) => [...l, ...newLines]);
+        setTimeout(() => navigate("/contact"), 600);
+        return;
+      }
       if (target === "..") {
         newLines.push({
           type: "output-line",

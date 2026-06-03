@@ -116,7 +116,7 @@ export default function CheckoutPage() {
     }
   }, [user?.email]);
   useEffect(() => {
-    if (!user) navigate("/auth?redirect=checkout");
+    if (!user) navigate("/login");
   }, [user, navigate]);
   useEffect(() => {
     localStorage.setItem(LS_KEY, JSON.stringify(form));

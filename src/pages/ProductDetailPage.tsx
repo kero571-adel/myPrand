@@ -258,7 +258,7 @@ export default function ProductDetailPage() {
                     className="text-3xl font-bold text-white"
                     style={{ textShadow: "0 0 10px rgba(255,255,255,0.2)" }}
                   >
-                    ${product.price}.00
+                    {product.price}.00
                   </span>
                   <span
                     className={`text-xs px-3 py-1 border ${
@@ -286,7 +286,7 @@ export default function ProductDetailPage() {
                     {totalUnits > 0 && (
                       <span className="text-[#3a5a3a] ml-3">
                         // {totalUnits} unit{totalUnits !== 1 ? "s" : ""}{" "}
-                        selected — ${totalPrice}.00
+                        selected — {totalPrice}.00
                       </span>
                     )}
                   </div>

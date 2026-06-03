@@ -3,10 +3,22 @@ import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Footer from "../components/Footer";
 import { Helmet } from "react-helmet-async";
+import { useState, useEffect } from "react";
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const [devsOnline, setDevsOnline] = useState(4.2);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDevsOnline((prev) => {
+        const change = (Math.random() - 0.5) * 0.8;
+        const newValue = Math.max(3.5, Math.min(5.8, prev + change));
+        return parseFloat(newValue.toFixed(1));
+      });
+    }, 3000);
 
+    return () => clearInterval(interval);
+  }, []);
   return (
     <>
       <Helmet>
@@ -47,7 +59,7 @@ export default function HomePage() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/images/hero_bg.webp)",
+            backgroundImage: "url(/images/hero_bg.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center bottom",
           }}
@@ -79,7 +91,7 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             style={{ willChange: "transform, opacity" }}
             className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl"
           >
@@ -135,7 +147,7 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.5 }}
+              transition={{ delay: 0.4, duration: 0.3 }}
               className="mt-6 mx-auto w-full max-w-sm sm:max-w-md px-4"
             >
               <div
@@ -167,7 +179,7 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.5 }}
+            transition={{ delay: 0.6, duration: 0.3 }}
             className="mt-10 flex flex-col sm:flex-row items-center gap-4"
           >
             <button
@@ -189,13 +201,13 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.6, duration: 0.6 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
             className="mt-16 flex flex-wrap justify-center gap-8 sm:gap-16"
           >
             {[
               { label: "ASSETS_COMPILED", value: "12" },
               { label: "DROPS_DEPLOYED", value: "01" },
-              { label: "DEVS_ONLINE", value: "4.2K" },
+              { label: "DEVS_ONLINE", value: devsOnline.toString() },
             ].map((stat) => (
               <div
                 key={stat.label}
