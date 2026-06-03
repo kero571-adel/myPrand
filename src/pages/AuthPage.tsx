@@ -214,7 +214,14 @@ export default function AuthPage() {
               await loginWithGoogle();
               navigate("/");
             } catch (e: any) {
-              setError("Google sign-in failed. Try again.");
+              console.error("Google Sign-in Error:", e.code, e.message);
+              const msg: Record<string, string> = {
+                "auth/popup-blocked": "Popup was blocked. Please allow popups.",
+                "auth/popup-closed-by-user": "Sign-in was cancelled.",
+                "auth/operation-not-supported-in-this-environment":
+                  "Google sign-in not configured.",
+              };
+              setError(msg[e.code] ?? `Error: ${e.message}`);
             } finally {
               setLoading(false);
             }
