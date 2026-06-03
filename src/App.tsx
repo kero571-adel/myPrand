@@ -6,7 +6,6 @@ import HomePage from "./pages/HomePage";
 import { AuthProvider } from "./lib/AuthContext";
 import Loader from "./components/Loader";
 
-// Lazy load الصفحات الثقيلة
 const CollectionsPage = lazy(() => import("./pages/CollectionsPage"));
 const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
 const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));

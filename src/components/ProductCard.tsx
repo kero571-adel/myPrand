@@ -12,13 +12,13 @@ interface Product {
   assetId: string;
   [key: string]: any;
 }
-
+//background-color: color-mix(in oklab, #00FF00 10%, #1a3a1a);
 const statusColors: Record<
   string,
   { bg: string; text: string; border: string }
 > = {
   IN_STOCK: {
-    bg: "bg-[#00FF00]/10",
+    bg: "bg-[#000F00]/50",
     text: "text-[#00FF00]",
     border: "border-[#00FF00]/40",
   },
@@ -47,16 +47,16 @@ export default function ProductCard({ product }: { product: Product }) {
       style={{ fontFamily: "'Fira Code', monospace" }}
     >
       {/* Card Header */}
-      <div className="flex items-center justify-between px-2 sm:px-3 py-1.5 sm:py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
-        <div className="flex gap-1">
+      <div className="flex items-center justify-between px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 border-b border-[#1a2e1a] bg-[#0a0f0a]">
+        <div className="flex gap-1 sm:gap-1.5">
           {dotColors.map((c, i) => (
             <span
               key={i}
-              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${c}`}
+              className={`w-1.5 sm:w-2 md:w-2.5 h-1.5 sm:h-2 md:h-2.5 rounded-full ${c}`}
             />
           ))}
         </div>
-        <span className="text-[8px] sm:text-[10px] text-[#3a5a3a] tracking-wider truncate ml-2">
+        <span className="text-[7px] xs:text-[8px] sm:text-[10px] md:text-xs text-[#3a5a3a] tracking-wider truncate ml-2">
           {product.assetId}
         </span>
       </div>

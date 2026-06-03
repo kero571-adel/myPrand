@@ -36,7 +36,7 @@ export const products: Product[] = [
     description: "// Some friendships became comments.",
     longDescription:
       "Premium oversized interlock cotton t-shirt featuring the iconic /**/ developer symbol. Inspired by the sacrifices every programmer makes while chasing the next build.",
-    price: 34,
+    price: 450,
     priceHex: "0x0022",
     image: "/images/tees/tee_black_1.png",
     images: [
@@ -49,7 +49,7 @@ export const products: Product[] = [
     assetId: "drop01_asset_01.exe",
     specs: {
       fabric: "INTERLOCK_COTTON",
-      weight: "240GSM",
+
       fit: "OVERSIZED_DEV",
       color: "BLACK",
       print: "WHITE_SLASHES_BRONZE_ASTERISKS",
@@ -66,7 +66,7 @@ export const products: Product[] = [
     description: "// Some friendships became comments.",
     longDescription:
       "Premium oversized interlock cotton t-shirt featuring the iconic /**/ developer symbol.",
-    price: 34,
+    price: 450,
     priceHex: "0x0022",
     image: "/images/tees/white_tee_1.png",
     images: [
@@ -79,7 +79,6 @@ export const products: Product[] = [
     assetId: "drop01_asset_02.exe",
     specs: {
       fabric: "INTERLOCK_COTTON",
-      weight: "240GSM",
       fit: "OVERSIZED_DEV",
       color: "WHITE",
       print: "WHITE_SLASHES_BRONZE_ASTERISKS",
@@ -96,7 +95,7 @@ export const products: Product[] = [
     description: "// Some friendships became comments.",
     longDescription:
       "Premium oversized interlock cotton t-shirt featuring the iconic /**/ developer symbol.",
-    price: 36,
+    price: 450,
     priceHex: "0x0024",
     image: "/images/tees/tee_bur_1.png",
     images: [
@@ -109,7 +108,6 @@ export const products: Product[] = [
     assetId: "drop01_asset_03.exe",
     specs: {
       fabric: "INTERLOCK_COTTON",
-      weight: "240GSM",
       fit: "OVERSIZED_DEV",
       color: "BURGUNDY",
       print: "WHITE_SLASHES_BRONZE_ASTERISKS",
@@ -126,7 +124,7 @@ export const products: Product[] = [
     description: "// Some friendships became comments.",
     longDescription:
       "Premium oversized interlock cotton t-shirt featuring the iconic /**/ developer symbol.",
-    price: 36,
+    price: 450,
     priceHex: "0x0024",
     image: "/images/tees/tee_green_3.png",
     images: [
@@ -139,7 +137,7 @@ export const products: Product[] = [
     assetId: "drop01_asset_04.exe",
     specs: {
       fabric: "INTERLOCK_COTTON",
-      weight: "240GSM",
+
       fit: "OVERSIZED_DEV",
       color: "DARK_GREEN",
       print: "WHITE_SLASHES_BRONZE_ASTERISKS",
@@ -151,52 +149,59 @@ export const products: Product[] = [
   // =========================
   // AFK SWEATPANTS
   // =========================
-
   {
-    id: "afk-sweatpants-black",
-    slug: "afk-sweatpants-black",
-    name: "AFK_SWEATPANTS_BLACK",
-    shortName: "AFK_PANTS",
-    description: "// Away from keyboard. Never from the mission.",
+    id: "commented-out-sweatpants-black",
+    slug: "commented-out-sweatpants-black",
+    name: "COMMENTED_OUT_SWEATPANTS_BLACK",
+    shortName: "COMMENTED_OUT",
+    description: "// Some friendships became comments.",
     longDescription:
-      "Relaxed premium sweatpants designed for long coding sessions. Minimal branding, heavyweight comfort, developer lifestyle approved.",
-    price: 42,
-    priceHex: "0x002A",
-    image: "/images/data_cargos.jpg",
-    images: ["/images/data_cargos.jpg"],
+      "Premium heavyweight cotton sweatpants featuring the signature // back-pocket branding. Designed for developers who live between commits and coffee.",
+    price: 400,
+    priceHex: "0x0190",
+    image: "/images/sweatPants/sweatPants_black_2.jpeg",
+    images: [
+      "/images/sweatPants/sweatPants_black_2.jpeg",
+      "/images/sweatPants/sweatPants_black_1.jpeg",
+      "/images/sweatPants/sweatPants_black_3.png",
+    ],
     status: "IN_STOCK",
     category: "sweatpants",
-    assetId: "drop01_asset_05.exe",
+    assetId: "drop01_asset_07.exe",
     specs: {
-      fabric: "PREMIUM_FLEECE",
-      weight: "320GSM",
+      fabric: "PREMIUM_COTTON",
       fit: "RELAXED_DEV",
       color: "BLACK",
+      print: "WHITE_DOUBLE_SLASH_BACK_POCKET",
     },
     sizes: ["M", "L", "XL", "XXL"],
     version: "v1.0.0",
   },
 
   {
-    id: "afk-sweatpants-grey",
-    slug: "afk-sweatpants-grey",
-    name: "AFK_SWEATPANTS_GREY",
-    shortName: "AFK_PANTS",
-    description: "// Away from keyboard. Never from the mission.",
+    id: "commented-out-sweatpants-grey",
+    slug: "commented-out-sweatpants-grey",
+    name: "COMMENTED_OUT_SWEATPANTS_GREY",
+    shortName: "COMMENTED_OUT",
+    description: "// Some friendships became comments.",
     longDescription:
-      "Relaxed premium sweatpants designed for long coding sessions. Minimal branding, heavyweight comfort, developer lifestyle approved.",
-    price: 42,
-    priceHex: "0x002A",
-    image: "/images/ghost_tee.jpg",
-    images: ["/images/ghost_tee.jpg"],
+      "Premium heavyweight cotton sweatpants featuring the signature // back-pocket branding. Designed for developers who live between commits and coffee.",
+    price: 400,
+    priceHex: "0x0190",
+    image: "/images/sweatPants/sweatPants_gray_1.png",
+    images: [
+      "/images/sweatPants/sweatPants_gray_1.png",
+      "/images/sweatPants/sweatPants_gray_2.png",
+      "/images/sweatPants/sweatPants_gray_3.png",
+    ],
     status: "IN_STOCK",
     category: "sweatpants",
-    assetId: "drop01_asset_06.exe",
+    assetId: "drop01_asset_08.exe",
     specs: {
-      fabric: "PREMIUM_FLEECE",
-      weight: "320GSM",
+      fabric: "PREMIUM_COTTON",
       fit: "RELAXED_DEV",
-      color: "LIGHT_GREY",
+      color: "LIGHT_HEATHER_GREY",
+      print: "WHITE_DOUBLE_SLASH_BACK_POCKET",
     },
     sizes: ["M", "L", "XL", "XXL"],
     version: "v1.0.0",

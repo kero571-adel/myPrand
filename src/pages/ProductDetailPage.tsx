@@ -42,7 +42,7 @@ export default function ProductDetailPage() {
           </div>
           <button
             onClick={() => navigate("/collections")}
-            className="mt-6 neon-btn-outline px-6 py-2 text-xs border border-[#00FF00]"
+            className="text-white mt-6 neon-btn-outline px-6 py-2 text-xs border border-[#00FF00]"
           >
             cd ../collections
           </button>
@@ -141,7 +141,7 @@ export default function ProductDetailPage() {
             {/* Breadcrumb */}
             <button
               onClick={() => navigate("/collections")}
-              className="flex items-center gap-2 text-[#3a5a3a] hover:text-[#00FF00] text-xs mb-6 transition-colors"
+              className="flex items-center gap-2 text-white hover:text-[#00FF00] text-xs mb-6 transition-colors"
               style={{ fontFamily: "'Fira Code', monospace" }}
             >
               <ArrowLeft size={14} />
@@ -160,22 +160,22 @@ export default function ProductDetailPage() {
                   className="border border-[#1a2e1a] bg-[#080d08] rounded-sm overflow-hidden"
                   style={{ boxShadow: "0 0 20px rgba(0,255,0,0.08)" }}
                 >
-                  <div className="flex items-center justify-between px-3 py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
-                    <div className="flex items-center gap-3">
-                      <div className="flex gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                  <div className="flex items-center justify-between px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 border-b border-[#1a2e1a] bg-[#0a0f0a] flex-wrap gap-2 sm:gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="flex gap-1 sm:gap-1.5">
+                        <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#ff5f57]" />
+                        <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#febc2e]" />
+                        <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#28c840]" />
                       </div>
-                      <span className="text-[#5a7a5a] text-[10px]">
+                      <span className="text-[#5a7a5a] text-[8px] sm:text-[10px] md:text-xs whitespace-nowrap">
                         VIEW_PORT.exe
                       </span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[#3a5a3a] text-[10px]">
+                    <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+                      <span className="text-[#3a5a3a] text-[7px] sm:text-[10px] md:text-xs whitespace-nowrap truncate">
                         ID: {product.assetId.replace(".exe", "")}
                       </span>
-                      <span className="text-[#00FF00] text-[10px]">
+                      <span className="text-[#00FF00] text-[7px] sm:text-[10px] md:text-xs whitespace-nowrap flex-shrink-0">
                         ■ ACTIVE
                       </span>
                     </div>
@@ -242,12 +242,12 @@ export default function ProductDetailPage() {
                 {/* Title */}
                 <div>
                   <h1
-                    className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-2"
+                    className="text-md md:text-2xl lg:text-3xl  font-bold text-white leading-tight mb-2 break-words"
                     style={{ textShadow: "0 0 20px rgba(255,255,255,0.1)" }}
                   >
                     {product.name}
                   </h1>
-                  <div className="text-[#00FF00] text-xs tracking-widest">
+                  <div className="text-[#00FF00] text-[10px] sm:text-xs md:text-sm tracking-widest overflow-hidden">
                     &gt; STYL_SYS {product.version}
                   </div>
                 </div>
@@ -409,9 +409,9 @@ export default function ProductDetailPage() {
                   <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBuyNow}
-                    disabled={totalUnits === 0}
+                    disabled={totalUnits === 0 || justAdded === true}
                     className={`w-full py-3.5 text-sm font-bold tracking-widest flex items-center justify-center gap-3 rounded-sm neon-btn-outline border border-[#00FF00] ${
-                      totalUnits === 0
+                      totalUnits === 0 || justAdded === true
                         ? "opacity-30 cursor-not-allowed neon-btn"
                         : justAdded
                         ? "bg-[#00cc00] text-[#050a05]"
@@ -447,6 +447,23 @@ export default function ProductDetailPage() {
                 </div>
               </motion.div>
             </div>
+          </div>
+          {/* Mobile checkout CTA */}
+          <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#1a2e1a] bg-[#050a05]/95 backdrop-blur-sm p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span
+                className="text-[#00FF00] text-[10px] tracking-wider"
+                style={{ fontFamily: "'Fira Code', monospace" }}
+              >
+                &gt; STATUS: COMPILED
+              </span>
+            </div>
+            <button
+              onClick={() => navigate("/checkout")}
+              className="w-full neon-btn py-3 rounded-sm text-xs font-bold tracking-widest"
+            >
+              EXEC_CHECKOUT()
+            </button>
           </div>
         </main>
         <Footer />

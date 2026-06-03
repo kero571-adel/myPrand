@@ -11,24 +11,24 @@ const GOVERNORATES: Record<
   string,
   { label: string; shipping: number; days: string }
 > = {
-  cairo: { label: "Cairo", shipping: 50, days: "1-2" },
-  giza: { label: "Giza", shipping: 50, days: "1-2" },
-  alexandria: { label: "Alexandria", shipping: 60, days: "2-3" },
-  qalyubia: { label: "Qalyubia", shipping: 55, days: "1-2" },
-  sharqia: { label: "Sharqia", shipping: 65, days: "2-3" },
-  dakahlia: { label: "Dakahlia", shipping: 65, days: "2-3" },
-  gharbia: { label: "Gharbia", shipping: 65, days: "2-3" },
-  monufia: { label: "Monufia", shipping: 65, days: "2-3" },
-  beheira: { label: "Beheira", shipping: 65, days: "2-3" },
-  kafr_el_sheikh: { label: "Kafr El-Sheikh", shipping: 70, days: "2-3" },
-  damietta: { label: "Damietta", shipping: 70, days: "2-3" },
-  port_said: { label: "Port Said", shipping: 70, days: "2-3" },
-  ismailia: { label: "Ismailia", shipping: 65, days: "2-3" },
-  suez: { label: "Suez", shipping: 65, days: "2-3" },
+  cairo: { label: "Cairo", shipping: 50, days: "3-5" },
+  giza: { label: "Giza", shipping: 50, days: "3-5" },
+  alexandria: { label: "Alexandria", shipping: 60, days: "3-5" },
+  qalyubia: { label: "Qalyubia", shipping: 50, days: "3-5" },
+  sharqia: { label: "Sharqia", shipping: 50, days: "3-5" },
+  dakahlia: { label: "Dakahlia", shipping: 50, days: "3-5" },
+  gharbia: { label: "Gharbia", shipping: 50, days: "3-5" },
+  monufia: { label: "Monufia", shipping: 50, days: "3-5" },
+  beheira: { label: "Beheira", shipping: 50, days: "3-5" },
+  kafr_el_sheikh: { label: "Kafr El-Sheikh", shipping: 70, days: "3-5" },
+  damietta: { label: "Damietta", shipping: 70, days: "3-5" },
+  port_said: { label: "Port Said", shipping: 70, days: "3-5" },
+  ismailia: { label: "Ismailia", shipping: 50, days: "3-5" },
+  suez: { label: "Suez", shipping: 50, days: "3-5" },
   north_sinai: { label: "North Sinai", shipping: 80, days: "3-5" },
   south_sinai: { label: "South Sinai", shipping: 80, days: "3-5" },
-  fayoum: { label: "Fayoum", shipping: 70, days: "2-3" },
-  beni_suef: { label: "Beni Suef", shipping: 70, days: "2-3" },
+  fayoum: { label: "Fayoum", shipping: 70, days: "3-5" },
+  beni_suef: { label: "Beni Suef", shipping: 70, days: "3-5" },
   minya: { label: "Minya", shipping: 75, days: "3-4" },
   asyut: { label: "Asyut", shipping: 75, days: "3-4" },
   sohag: { label: "Sohag", shipping: 75, days: "3-4" },
@@ -557,25 +557,6 @@ export default function CheckoutPage() {
                     onChange={set("address")}
                     required
                   />
-
-                  <div className="flex flex-col sm:flex-row justify-between gap-3 pt-2">
-                    <button
-                      onClick={() => setStep(1)}
-                      className="border border-[#1a2e1a] px-6 py-2.5 text-xs text-[#5a7a5a] hover:text-white hover:border-[#5a7a5a] active:text-white transition-all order-2 sm:order-1"
-                      style={{ fontFamily: "'Fira Code', monospace" }}
-                    >
-                      ← BACK
-                    </button>
-                    <button
-                      onClick={() => step2Valid && setStep(3)}
-                      disabled={!step2Valid}
-                      className={`neon-btn px-8 py-2.5 text-sm font-bold tracking-widest rounded-sm transition-opacity order-1 sm:order-2
-                        ${!step2Valid ? "opacity-40 cursor-not-allowed" : ""}`}
-                      style={{ fontFamily: "'Fira Code', monospace" }}
-                    >
-                      REVIEW_ORDER →
-                    </button>
-                  </div>
                 </div>
               </div>
 
@@ -624,6 +605,24 @@ export default function CheckoutPage() {
                     </div>
                   )}
                 </div>
+              </div>
+              <div className="flex flex-col sm:flex-row justify-between gap-3 pt-2">
+                <button
+                  onClick={() => setStep(1)}
+                  className="border border-[#1a2e1a] px-6 py-2.5 text-xs text-[#5a7a5a] hover:text-white hover:border-[#5a7a5a] active:text-white transition-all order-2 sm:order-1"
+                  style={{ fontFamily: "'Fira Code', monospace" }}
+                >
+                  ← BACK
+                </button>
+                <button
+                  onClick={() => step2Valid && setStep(3)}
+                  disabled={!step2Valid}
+                  className={`neon-btn px-8 py-2.5 text-sm font-bold tracking-widest rounded-sm transition-opacity order-1 sm:order-2
+                        ${!step2Valid ? "opacity-40 cursor-not-allowed" : ""}`}
+                  style={{ fontFamily: "'Fira Code', monospace" }}
+                >
+                  REVIEW_ORDER →
+                </button>
               </div>
             </motion.div>
           )}

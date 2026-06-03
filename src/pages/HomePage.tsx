@@ -22,11 +22,11 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>DCTOH | Developer Streetwear Brand</title>
+        <title>DCTOH | Programmer Streetwear Brand</title>
 
         <meta
           name="description"
-          content="Cyberpunk streetwear brand for developers and programmers. Premium clothing inspired by coding culture, techwear, and developer lifestyle."
+          content="Cyberpunk streetwear brand for programmer and programmers. Premium clothing inspired by coding culture, techwear, and developer lifestyle."
         />
 
         <meta
@@ -84,9 +84,27 @@ export default function HomePage() {
             backgroundSize: "40px 100%",
           }}
         />
-
         {/* Main content */}
-        <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-20 pt-28">
+        <main className="text-center relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-20 pt-28">
+          <div className="mb-6 w-full px-4">
+            <div
+              className="flex items-center justify-center gap-2 border border-[#00FF00]/40 bg-[#00FF00]/10 px-3 sm:px-4 py-2 rounded-sm flex-wrap"
+              style={{
+                boxShadow: "0 0 20px rgba(0,255,0,0.15)",
+                fontFamily: "'Fira Code', monospace",
+              }}
+            >
+              <span className="text-[#00FF00] flex-shrink-0">●</span>
+
+              <span className="text-[#00FF00] text-[10px] sm:text-xs md:text-sm font-bold tracking-wider flex-shrink-0">
+                SYSTEM_ALERT:
+              </span>
+
+              <span className="text-white text-[10px] sm:text-xs md:text-sm tracking-wide">
+                30% OFF SHIPPING FOR A LIMITED TIME
+              </span>
+            </div>
+          </div>
           {/* Hero Terminal Box */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -126,7 +144,7 @@ export default function HomePage() {
                         "0 0 20px rgba(0,255,0,0.8), 0 0 40px rgba(0,255,0,0.4)",
                     }}
                   >
-                    Developer
+                    Programmer
                   </span>{" "}
                   Universe
                 </h1>
