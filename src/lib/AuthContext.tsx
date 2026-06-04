@@ -23,19 +23,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ✅ Firebase يتحمل lazy بعد الـ render
-    let unsub: () => void;
+    let unsub: (() => void) | undefined;
+    // ✅ cancelled flag عشان لو الـ component اتشال قبل ما الـ import يخلص
+    let cancelled = false;
 
-    import("./firebase").then(({ auth }) => {
-      import("firebase/auth").then(({ onAuthStateChanged }) => {
-        unsub = onAuthStateChanged(auth, (u) => {
-          setUser(u);
-          setLoading(false);
-        });
+    (async () => {
+      const { auth } = await import("./firebase");
+      const { onAuthStateChanged } = await import("firebase/auth");
+      if (cancelled) return;
+      unsub = onAuthStateChanged(auth, (u) => {
+        setUser(u);
+        setLoading(false);
       });
-    });
+    })();
 
-    return () => unsub?.();
+    return () => {
+      cancelled = true;
+      unsub?.();
+    };
   }, []);
 
   const login = async (e: string, p: string): Promise<void> => {
@@ -63,10 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, login, signup, logout, loginWithGoogle }}
-    >
-      {/* ✅ خلي children تظهر فوراً، loading يتعامل معاه في كل page لوحده */}
+    <AuthContext.Provider value={{ user, loading, login, signup, logout, loginWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

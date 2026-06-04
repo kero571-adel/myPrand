@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Footer from "../components/Footer";
 import { Helmet } from "react-helmet-async";
@@ -59,7 +59,7 @@ export default function HomePage() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/images/hero_bg.jpg)",
+            backgroundImage: "url(/images/hero_bg.webp)",
             backgroundSize: "cover",
             backgroundPosition: "center bottom",
           }}
@@ -106,9 +106,9 @@ export default function HomePage() {
             </div>
           </div>
           {/* Hero Terminal Box */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+          <m.div
+             initial={{ y: 30 }}
+             animate={{ y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             style={{ willChange: "transform, opacity" }}
             className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl"
@@ -149,20 +149,17 @@ export default function HomePage() {
                   Universe
                 </h1>
 
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6, duration: 0.5 }}
+                <p
                   className="text-[#8aaa8a] text-sm sm:text-base tracking-widest"
                   style={{ fontFamily: "'Fira Code', monospace" }}
                 >
                   Wear The Code. Build Your Identity.
-                </motion.p>
+                </p>
               </div>
             </div>
 
             {/* Terminal input line */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.3 }}
@@ -190,11 +187,11 @@ export default function HomePage() {
                   import &#123; drip &#125; from &quot;./collection&quot;
                 </span>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
 
           {/* CTA Buttons */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.3 }}
@@ -213,10 +210,10 @@ export default function HomePage() {
             >
               OPEN_TERMINAL()
             </button>
-          </motion.div>
+          </m.div>
 
           {/* Stats Row */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.4 }}
@@ -243,7 +240,7 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </m.div>
         </main>
 
         {/* Footer */}

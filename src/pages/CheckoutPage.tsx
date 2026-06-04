@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Zap, Trash2, Lock, MapPin, Clock, Plus, Minus } from "lucide-react";
 import Footer from "../components/Footer";
 import { useCart } from "../lib/CartContext";
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
         <main className="flex-1 flex items-center justify-center pt-14 px-4">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -241,7 +241,7 @@ export default function CheckoutPage() {
                 RETURN_HOME()
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </main>
         <Footer />
       </div>
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
       <main className="flex-1 pt-14">
         <div className="max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
           {/* Title */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 sm:mb-8"
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
             >
               STATUS: IN_PROGRESS // STEP_{step}_OF_3
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Steps bar */}
           <div className="flex mb-5 sm:mb-6 border border-[#1a2e1a] bg-[#080d08] overflow-hidden">
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
 
           {/* ── STEP 1: Cart review ── */}
           {step === 1 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="border border-[#1a2e1a] bg-[#080d08]">
                 <div className="px-3 sm:px-4 py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
                   <span
@@ -452,12 +452,12 @@ export default function CheckoutPage() {
                   </div>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* ── STEP 2: Delivery details ── */}
           {step === 2 && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6"
@@ -624,12 +624,12 @@ export default function CheckoutPage() {
                   REVIEW_ORDER →
                 </button>
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* ── STEP 3: Confirm ── */}
           {step === 3 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="border border-[#1a2e1a] bg-[#080d08] w-full max-w-2xl mx-auto">
                 <div className="px-3 sm:px-4 py-2 border-b border-[#1a2e1a] bg-[#0a0f0a]">
                   <span
@@ -715,7 +715,7 @@ export default function CheckoutPage() {
                     >
                       ← EDIT
                     </button>
-                    <motion.button
+                    <m.button
                       whileTap={{ scale: 0.97 }}
                       onClick={async () => {
                         await handleSubmit();
@@ -723,11 +723,11 @@ export default function CheckoutPage() {
                       className="neon-btn px-8 py-3 text-sm font-bold tracking-widest rounded-sm flex items-center justify-center gap-2 order-1 sm:order-2"
                     >
                       <Zap size={16} /> CONFIRM_ORDER
-                    </motion.button>
+                    </m.button>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </div>
       </main>

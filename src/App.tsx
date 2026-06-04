@@ -1,3 +1,4 @@
+import { LazyMotion, domAnimation } from "framer-motion";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { CartProvider } from "./lib/CartContext";
@@ -29,36 +30,38 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <div
-            className="min-h-screen bg-[#050a05] text-[#c8d8c8]"
-            style={{ fontFamily: "'Fira Code', monospace" }}
-          >
-            <Navbar />
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
+          <LazyMotion features={domAnimation}>
+            <div
+              className="min-h-screen bg-[#050a05] text-[#c8d8c8]"
+              style={{ fontFamily: "'Fira Code', monospace" }}
+            >
+              <Navbar />
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
 
-                <Route path="/collections" element={<CollectionsPage />} />
+                  <Route path="/collections" element={<CollectionsPage />} />
 
-                <Route
-                  path="/collections/:id"
-                  element={<ProductDetailPage />}
-                />
+                  <Route
+                    path="/collections/:id"
+                    element={<ProductDetailPage />}
+                  />
 
-                <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
 
-                <Route path="/orders" element={<OrdersPage />} />
+                  <Route path="/orders" element={<OrdersPage />} />
 
-                <Route path="/terminal" element={<TerminalPage />} />
+                  <Route path="/terminal" element={<TerminalPage />} />
 
-                <Route path="/login" element={<AuthPage />} />
+                  <Route path="/login" element={<AuthPage />} />
 
-                <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
 
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Suspense>
-          </div>
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
+            </div>
+          </LazyMotion>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

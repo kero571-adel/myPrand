@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   ShoppingCart,
   Zap,
@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
 
       <div className="min-h-screen flex flex-col bg-[#050a05] grid-bg">
         <main className="flex-1 pt-14">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mb-10">
             {/* Breadcrumb */}
             <button
               onClick={() => navigate("/collections")}
@@ -150,9 +150,9 @@ export default function ProductDetailPage() {
 
             <div className="flex flex-col lg:flex-row gap-8">
               {/* LEFT: Image Panel */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+              <m.div
+                initial={{ x: -30 }}
+                animate={{ x: 0 }}
                 transition={{ duration: 0.6 }}
                 className="w-full lg:w-1/2 xl:w-5/12"
               >
@@ -192,7 +192,8 @@ export default function ProductDetailPage() {
                       <img
                         src={product.images[activeImage]}
                         alt={product.name}
-                        loading="lazy"
+                        loading={activeImage === 0 ? "eager" : "lazy"}
+                        fetchPriority={activeImage === 0 ? "high" : "auto"}
                         className="w-full h-full object-cover"
                       />
                       <div
@@ -229,10 +230,10 @@ export default function ProductDetailPage() {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* RIGHT: Product Info */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -308,7 +309,7 @@ export default function ProductDetailPage() {
                           {/* decrement / remove */}
                           <AnimatePresence>
                             {active && (
-                              <motion.button
+                              <m.button
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: 28, opacity: 1 }}
                                 exit={{ width: 0, opacity: 0 }}
@@ -321,7 +322,7 @@ export default function ProductDetailPage() {
                                 ) : (
                                   <Minus size={10} />
                                 )}
-                              </motion.button>
+                              </m.button>
                             )}
                           </AnimatePresence>
 
@@ -340,7 +341,7 @@ export default function ProductDetailPage() {
                           {/* qty display + increment */}
                           <AnimatePresence>
                             {active && (
-                              <motion.div
+                              <m.div
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: 56, opacity: 1 }}
                                 exit={{ width: 0, opacity: 0 }}
@@ -357,7 +358,7 @@ export default function ProductDetailPage() {
                                 >
                                   <Plus size={10} />
                                 </button>
-                              </motion.div>
+                              </m.div>
                             )}
                           </AnimatePresence>
                         </div>
@@ -372,7 +373,7 @@ export default function ProductDetailPage() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-3">
-                  <motion.button
+                  <m.button
                     whileTap={{ scale: 0.98 }}
                     onClick={handleAddToCart}
                     disabled={totalUnits === 0}
@@ -404,9 +405,9 @@ export default function ProductDetailPage() {
                             totalUnits !== 1 ? "s" : ""
                           }`}
                     </span>
-                  </motion.button>
+                  </m.button>
 
-                  <motion.button
+                  <m.button
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBuyNow}
                     disabled={totalUnits === 0 || justAdded === true}
@@ -420,7 +421,7 @@ export default function ProductDetailPage() {
                   >
                     <Zap size={16} />
                     executeOrder()
-                  </motion.button>
+                  </m.button>
                 </div>
 
                 {/* Description */}
@@ -445,7 +446,7 @@ export default function ProductDetailPage() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             </div>
           </div>
           {/* Mobile checkout CTA */}

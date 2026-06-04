@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { SlidersHorizontal } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import SidebarFilters from "../components/SidebarFilters";
@@ -145,22 +145,25 @@ export default function CollectionsPage() {
                     </div>
                   </div>
                 ) : (
-                  <motion.div
+                  <m.div
                     layout
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                   >
                     {filtered.map((product, i) => (
-                      <motion.div
+                      <m.div
                         key={product.id}
                         layout
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: i < 3 ? 1 : 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: i * 0.07 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: i < 3 ? 0 : i * 0.07,
+                        }}
                       >
                         <ProductCard product={product} />
-                      </motion.div>
+                      </m.div>
                     ))}
-                  </motion.div>
+                  </m.div>
                 )}
               </div>
             </div>
