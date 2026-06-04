@@ -1,7 +1,9 @@
 {
-    "images": {
-      "sizes": [640, 1200],
-      "formats": ["image/webp", "image/avif"],
-      "minimumCacheTTL": 31536000
-    }
-  }
+  "images": {
+    "sizes": [640, 1200],
+    "formats": ["image/webp", "image/avif"],
+    "minimumCacheTTL": 31536000
+  },
+
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
