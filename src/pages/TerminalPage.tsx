@@ -135,11 +135,19 @@ export default function TerminalPage() {
       });
     } else if (base === "whoami") {
       [
-        "USER: anonymous_dev",
-        "SYSTEM: STYL_SYSTEMS v2.4.0",
-        "BRANCH: main",
-        "STATUS: ONLINE",
-        "CLEARANCE: LEVEL_1",
+        "USER      : anonymous_dev",
+        "SYSTEM    : STYL_SYSTEMS",
+        "VERSION   : v2.4.0",
+        "BRANCH    : main",
+        "STATUS    : ONLINE",
+        "",
+        "// Not a fashion brand.",
+        "// Not a tech company.",
+        "// Somewhere in between.",
+        "",
+        "// Built for developers,",
+        "// designers, founders,",
+        "// and anyone still shipping.",
       ].forEach((t) => newLines.push({ type: "output-line", text: t }));
     } else if (base === "cat") {
       if (!args) {
