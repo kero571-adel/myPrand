@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { CartProvider } from "./lib/CartContext";
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
 import { AuthProvider } from "./lib/AuthContext";
 import Loader from "./components/Loader";
 
@@ -15,7 +14,7 @@ const TerminalPage = lazy(() => import("./pages/TerminalPage"));
 const AuthPage = lazy(() => import("./pages/AuthPage"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
-
+const HomePage = lazy(() => import("./pages/HomePage"));
 // Loading Fallback Component
 function PageLoader() {
   return (

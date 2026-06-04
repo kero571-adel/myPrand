@@ -1,17 +1,24 @@
 import {
-  collection, addDoc, query, where, orderBy,
-  doc, updateDoc, arrayUnion, onSnapshot,
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  doc,
+  updateDoc,
+  arrayUnion,
+  onSnapshot,
   type Unsubscribe,
-} from 'firebase/firestore';
-import { db } from './firebase';
+} from "firebase/firestore";
+import { getDb } from "./firebase";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export type OrderStatus =
-  | 'ORDER_PLACED'
-  | 'SHIPPED'
-  | 'DELIVERED'
-  | 'CANCELLED';
+  | "ORDER_PLACED"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED";
 
 export interface OrderItem {
   id: string;
@@ -48,43 +55,62 @@ export interface Order {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 export function generateOrderId(): string {
-  const d    = new Date();
-  const date = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+  const d = new Date();
+  const date = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}${String(d.getDate()).padStart(2, "0")}`;
   const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `STYL-${date}-${rand}`;
 }
 
 // ─── Firestore CRUD ───────────────────────────────────────────────────────────
 
-export async function addOrder(order: Omit<Order, 'firestoreId'>): Promise<string> {
-  const ref = await addDoc(collection(db, 'orders'), order);
+export async function addOrder(
+  order: Omit<Order, "firestoreId">
+): Promise<string> {
+  const db = await getDb();
+  const ref = await addDoc(collection(db, "orders"), order);
   return ref.id;
 }
 
 export function subscribeToUserOrders(
   userId: string,
-  callback: (orders: Order[]) => void,
-): Unsubscribe {
-  const q = query(
-    collection(db, 'orders'),
-    where('userId', '==', userId),
-    orderBy('placedAt', 'desc'),
-  );
-  return onSnapshot(q, (snap) => {
-    const orders: Order[] = snap.docs.map((d) => ({
-      ...(d.data() as Omit<Order, 'firestoreId'>),
-      firestoreId: d.id,
-    }));
-    callback(orders);
-  });
+  callback: (orders: Order[]) => void
+): () => void {
+  let unsub: Unsubscribe | undefined;
+  let cancelled = false;
+
+  (async () => {
+    const db = await getDb();
+    if (cancelled) return;
+    const q = query(
+      collection(db, "orders"),
+      where("userId", "==", userId),
+      orderBy("placedAt", "desc")
+    );
+    unsub = onSnapshot(q, (snap) => {
+      const orders: Order[] = snap.docs.map((d) => ({
+        ...(d.data() as Omit<Order, "firestoreId">),
+        firestoreId: d.id,
+      }));
+      callback(orders);
+    });
+  })();
+
+  return () => {
+    cancelled = true;
+    unsub?.();
+  };
 }
 
 export async function updateOrderStatus(
   firestoreId: string,
   status: OrderStatus,
-  note?: string,
+  note?: string
 ): Promise<void> {
-  await updateDoc(doc(db, 'orders', firestoreId), {
+  const db = await getDb();
+  await updateDoc(doc(db, "orders", firestoreId), {
     status,
     statusHistory: arrayUnion({
       status,
@@ -100,8 +126,32 @@ export const STATUS_META: Record<
   OrderStatus,
   { label: string; color: string; bg: string; border: string; icon: string }
 > = {
-  ORDER_PLACED: { label: 'Order Placed', color: '#febc2e', bg: 'rgba(254,188,46,0.08)', border: 'rgba(254,188,46,0.3)', icon: '⏳' },
-  SHIPPED:      { label: 'Shipped',      color: '#00aaff', bg: 'rgba(0,170,255,0.08)',  border: 'rgba(0,170,255,0.3)',  icon: '🚚' },
-  DELIVERED:    { label: 'Delivered',    color: '#00FF00', bg: 'rgba(0,255,0,0.08)',    border: 'rgba(0,255,0,0.3)',    icon: '✓'  },
-  CANCELLED:    { label: 'Cancelled',    color: '#ff5f57', bg: 'rgba(255,95,87,0.08)', border: 'rgba(255,95,87,0.3)', icon: '✕'  },
+  ORDER_PLACED: {
+    label: "Order Placed",
+    color: "#febc2e",
+    bg: "rgba(254,188,46,0.08)",
+    border: "rgba(254,188,46,0.3)",
+    icon: "⏳",
+  },
+  SHIPPED: {
+    label: "Shipped",
+    color: "#00aaff",
+    bg: "rgba(0,170,255,0.08)",
+    border: "rgba(0,170,255,0.3)",
+    icon: "🚚",
+  },
+  DELIVERED: {
+    label: "Delivered",
+    color: "#00FF00",
+    bg: "rgba(0,255,0,0.08)",
+    border: "rgba(0,255,0,0.3)",
+    icon: "✓",
+  },
+  CANCELLED: {
+    label: "Cancelled",
+    color: "#ff5f57",
+    bg: "rgba(255,95,87,0.08)",
+    border: "rgba(255,95,87,0.3)",
+    icon: "✕",
+  },
 };

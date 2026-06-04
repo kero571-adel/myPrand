@@ -4,29 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DCTOH | Developer Streetwear Brand</title>
-    <meta name="description" content="DCTOH is a cyberpunk streetwear brand made for developers, programmers, and coding culture." />
-    <meta name="keywords" content="developer clothing, programmer streetwear, coding fashion, techwear, cyberpunk clothing, developer brand" />
+    <meta
+      name="description"
+      content="DCTOH is a cyberpunk streetwear brand made for developers, programmers, and coding culture."
+    />
+    <meta
+      name="keywords"
+      content="developer clothing, programmer streetwear, coding fashion, techwear, cyberpunk clothing, developer brand"
+    />
     <meta name="author" content="DCTOH" />
     <meta property="og:title" content="DCTOH | Developer Streetwear" />
-    <meta property="og:description" content="Wear the code. Build your identity." />
-    <meta property="og:image" content="https://dctoh.vercel.app/images/og-cover.png" />
+    <meta
+      property="og:description"
+      content="Wear the code. Build your identity."
+    />
+    <meta
+      property="og:image"
+      content="https://dctoh.vercel.app/images/og-cover.png"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dctoh.vercel.app" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="DCTOH | Developer Streetwear" />
-    <meta name="twitter:description" content="Wear the code. Build your identity." />
-    <meta name="twitter:image" content="https://dctoh.vercel.app/images/og-cover.png" />
+    <meta
+      name="twitter:description"
+      content="Wear the code. Build your identity."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dctoh.vercel.app/images/og-cover.png"
+    />
 
     <!-- Preconnects -->
-    <link rel="preconnect" href="https://myprand-a10b1.firebaseapp.com" crossorigin />
-    <link rel="preconnect" href="https://apis.google.com" crossorigin />
+    <!-- Firebase iframe: بدون crossorigin عشان مش CORS -->
+    <link rel="preconnect" href="https://myprand-a10b1.firebaseapp.com" />
+
+    <!-- Firebase API: مع crossorigin عشان fetch calls -->
     <link rel="preconnect" href="https://www.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- Fonts: مع crossorigin عشان @font-face محتاجها -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link rel="preload" as="image" href="/images/hero_bg.webp" fetchpriority="high" />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero_bg.webp"
+      fetchpriority="high"
+    />
 
-    <meta name="google-site-verification" content="X9IzHqOQ4S-f7N9QRJGzWXIOZTXCg5-dgr9i_3JFjL0" />
+    <meta
+      name="google-site-verification"
+      content="X9IzHqOQ4S-f7N9QRJGzWXIOZTXCg5-dgr9i_3JFjL0"
+    />
     <link rel="canonical" href="https://dctoh.vercel.app" />
     <link rel="icon" href="/favicon.png" />
 
@@ -38,7 +68,10 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet"
+      />
     </noscript>
   </head>
   <body>

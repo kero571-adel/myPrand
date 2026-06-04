@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
 const firebaseConfig = {
   apiKey: "AIzaSyADQRIWmCSDnBE_wV1bOUDP_0uNNsN7h60",
   authDomain: "myprand-a10b1.firebaseapp.com",
@@ -12,9 +11,15 @@ const firebaseConfig = {
   measurementId: "G-HWL8126Q22",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
-export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 export { signInWithPopup };
+let _db: import("firebase/firestore").Firestore | null = null;
+export async function getDb() {
+  if (_db) return _db;
+  const { getFirestore } = await import("firebase/firestore");
+  _db = getFirestore(app);
+  return _db;
+}
